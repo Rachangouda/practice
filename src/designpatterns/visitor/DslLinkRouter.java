@@ -1,6 +1,6 @@
 package designpatterns.visitor;
 
-public class DslLinkRouter implements Router{
+public class DslLinkRouter implements Router {
 
 
     @Override

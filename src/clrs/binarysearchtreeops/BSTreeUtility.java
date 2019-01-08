@@ -21,8 +21,7 @@ public class BSTreeUtility {
                 Node temp = stack.pop();
                 System.out.print(temp.key + " ");
                 node = temp.right;
-            }
-            else
+            } else
                 break;
         }
     }
@@ -44,7 +43,7 @@ public class BSTreeUtility {
 
 
     public void preorderRecursive(Node root) {
-        if (root ==null)
+        if (root == null)
             return;
         System.out.print(root.key + " ");
         preorderRecursive(root.left);
@@ -52,7 +51,7 @@ public class BSTreeUtility {
     }
 
     public void postorderRecursive(Node root) {
-        if (root ==null)
+        if (root == null)
             return;
         postorderRecursive(root.left);
         postorderRecursive(root.right);
@@ -67,7 +66,7 @@ public class BSTreeUtility {
         postorderRecursive(root.right);
     }
 
-    public Node search(Node node, Integer key){
+    public Node search(Node node, Integer key) {
 
         while (node != null) {
             if (key == node.key) {
@@ -84,21 +83,20 @@ public class BSTreeUtility {
         return node;
     }
 
-    public Node minimum(Node root){
+    public Node minimum(Node root) {
         //int min=0;
-        while (root.left != null)
-        {
+        while (root.left != null) {
             //min = root.key;
             root = root.left;
         }
-        System.out.println("Minimum is :"+ root.key);
+        System.out.println("Minimum is :" + root.key);
         return root;
     }
 
 
-    public Node maximum(Node root){
+    public Node maximum(Node root) {
 
-        while (root.right != null){
+        while (root.right != null) {
             root = root.right;
         }
         System.out.println("Maximum is :" + root.key);
@@ -106,70 +104,69 @@ public class BSTreeUtility {
     }
 
 
-    public Node successorOf(Integer item, Node root){
-        Node node = search(root,item);
+    public Node successorOf(Integer item, Node root) {
+        Node node = search(root, item);
 
-        if(node.right != null) {
+        if (node.right != null) {
             Node successor = minimum(node.right);
-            System.out.println("Successor of "+ item + " is "+ successor.key);
+            System.out.println("Successor of " + item + " is " + successor.key);
             return successor;
         }
         Node ancestorSuccessorNode = node.parent;
-        while(ancestorSuccessorNode != null && node == ancestorSuccessorNode.right){
+        while (ancestorSuccessorNode != null && node == ancestorSuccessorNode.right) {
             node = ancestorSuccessorNode;
             ancestorSuccessorNode = ancestorSuccessorNode.parent;
         }
-        System.out.println("Successor of "+ item + " is "+ ancestorSuccessorNode.key);
+        System.out.println("Successor of " + item + " is " + ancestorSuccessorNode.key);
         return ancestorSuccessorNode;
     }
 
 
-    public Node predessorOf(Integer item, Node root){
-        Node node = search(root,item);
+    public Node predessorOf(Integer item, Node root) {
+        Node node = search(root, item);
 
-        if(node.left != null) {
+        if (node.left != null) {
             Node predessor = minimum(node.left);
-            System.out.println("Predessor of "+ item + " is "+ predessor.key);
+            System.out.println("Predessor of " + item + " is " + predessor.key);
             return predessor;
         }
         Node ancestorPredessorNode = node.parent;
-        while(ancestorPredessorNode != null && node == ancestorPredessorNode.left){
+        while (ancestorPredessorNode != null && node == ancestorPredessorNode.left) {
             node = ancestorPredessorNode;
             ancestorPredessorNode = ancestorPredessorNode.parent;
         }
-        System.out.println("Predessor of "+ item + " is "+ ancestorPredessorNode.key);
+        System.out.println("Predessor of " + item + " is " + ancestorPredessorNode.key);
         return ancestorPredessorNode;
     }
 
 
-    public void inorderBySucessorLogic(Node root){
+    public void inorderBySucessorLogic(Node root) {
 
         Node node = minimum(root);
         System.out.print("Inorder by minimum and n-1 successor:" + node.key + " ");
 
         Node currentSuccessor = node;
-        while (currentSuccessor != null){
+        while (currentSuccessor != null) {
             currentSuccessor = successorOf(currentSuccessor.key, root);
-            System.out.print( currentSuccessor.key + " ");
+            System.out.print(currentSuccessor.key + " ");
         }
     }
 
-    public void insertNode(Node newNode, Node root){
+    public void insertNode(Node newNode, Node root) {
 
         Node node = root;
-        Node nodeToAddNewNode=null;
-        while(node != null){
+        Node nodeToAddNewNode = null;
+        while (node != null) {
 
             nodeToAddNewNode = node;
-            if (node.key > newNode.key){
+            if (node.key > newNode.key) {
                 node = node.left;
-            }
-            else{
+            } else {
                 node = node.right;
             }
         }
 
-        if (nodeToAddNewNode == null){
+        if (nodeToAddNewNode == null) {
             root = newNode;
             return;
         }
@@ -182,28 +179,27 @@ public class BSTreeUtility {
     }
 
 
-    public void delete(Node root, int item){
+    public void delete(Node root, int item) {
 
-        Node node= search(root,item);
+        Node node = search(root, item);
 
         //node dont have any child
-        if(isLeafNode(node)) {
+        if (isLeafNode(node)) {
             removeLeaf(node);
             return;
         }
 
         //node dont have right child
-        if (ifThereIsNoRightSubTree(node)){
-            if (isThisNodeRightSubTreeNode(node)){
+        if (ifThereIsNoRightSubTree(node)) {
+            if (isThisNodeRightSubTreeNode(node)) {
                 replaceRootRightWithLeftSubTree(node);
-            }
-            else {
+            } else {
                 replaceRootLeftWithLeftSubTree(node);
             }
             return;
         }
         //node dont have left child
-        if (ifThereIsNoLeftSubTree(node)){
+        if (ifThereIsNoLeftSubTree(node)) {
 
             if (isThisNodeLeftSubTreeNode(node))
                 replaceRootLeftWithRightSubTree(node);
@@ -254,11 +250,11 @@ public class BSTreeUtility {
     }
 
     private boolean isThisNodeLeftSubTreeNode(Node node) {
-        return node.parent.left==node;
+        return node.parent.left == node;
     }
 
     private boolean ifThereIsNoLeftSubTree(Node node) {
-        return node.left ==null;
+        return node.left == null;
     }
 
     private boolean ifThereIsNoRightSubTree(Node node) {
@@ -293,8 +289,44 @@ public class BSTreeUtility {
         return node.left == null && node.right == null;
     }
 
-    public void print(String str){
-            System.out.println(str);
+    public void print(String str) {
+        System.out.println(str);
     }
 
+    /**
+     * Tree Rotations
+     *               |                              |
+     *               y      right-rotate()          x
+     *              / \      ------------>         / \
+     *             x   c                          a   y
+     *            / \        <------------           / \
+     *           a   b       left-rotate()          b   c
+     *
+     *
+     * */
+
+    public void rotateRight(Node root, Node y) {
+
+        if (y.left == null){//if node dont have left subtree
+            return;         //ie rotation is not possible just return
+        }
+        Node x = y.left;
+        Node beta =null ;
+        if(x.right != null){
+            beta = x.right;
+        }
+
+        x.right = y;
+        if (y.parent == null){
+            root = x;
+        }else if(y.parent.left == y){
+            y.parent.left = x;
+        }else {
+            y.parent.right = x;
+        }
+        x.parent = y.parent;
+        if(beta != null)beta.parent = y;
+        y.parent = x;
+        y.left = beta;
+    }
 }

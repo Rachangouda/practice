@@ -9,11 +9,7 @@ deleted, not a key.)*/
 
 public class MainClass {
 
-    Integer [] keySet = new Integer[]{1,2,3,3,4};
-
-
-
-
+    Integer[] keySet = new Integer[]{1, 2, 3, 3, 4};
 
 
     public static void main(String[] args) {

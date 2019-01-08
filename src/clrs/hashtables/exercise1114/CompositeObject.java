@@ -8,6 +8,12 @@ public class CompositeObject {
     private CompositeObject next;
     private CompositeObject prev;
 
+    public CompositeObject(Integer key, Integer value, Integer positionInArray) {
+        this.key = key;
+        this.value = value;
+        this.positionInArray = positionInArray;
+    }
+
     public CompositeObject getNext() {
         return next;
     }
@@ -22,12 +28,6 @@ public class CompositeObject {
 
     public void setPrev(CompositeObject prev) {
         this.prev = prev;
-    }
-
-    public CompositeObject(Integer key, Integer value, Integer positionInArray) {
-        this.key = key;
-        this.value = value;
-        this.positionInArray = positionInArray;
     }
 
     public Integer getKey() {

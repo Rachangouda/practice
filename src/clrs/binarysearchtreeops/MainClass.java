@@ -24,8 +24,8 @@ public class MainClass {
 
         root.left.left = new Node(10);
         root.left.right = new Node(22);
-        root.left.left.parent =root.left;
-        root.left.right.parent =root.left;
+        root.left.left.parent = root.left;
+        root.left.right.parent = root.left;
 
         root.left.right.left = new Node(18);
         root.left.right.right = new Node(24);
@@ -74,10 +74,16 @@ public class MainClass {
         //bstutil.insertNode(new Node(95),root);
 
 
-        bstutil.print("before delete..");
+        /*bstutil.print("before delete..");
         bstutil.inorderTraversalUsingStack(root);
-        bstutil.delete(root,25);
+        bstutil.delete(root, 25);
         bstutil.print("After deleting 25");
+        bstutil.inorderTraversalUsingStack(root);*/
+
+        bstutil.print("before ");
+        bstutil.inorderTraversalUsingStack(root);
+        bstutil.rotateRight(root,root.right.left);
+        bstutil.print("After rotate");
         bstutil.inorderTraversalUsingStack(root);
     }
 }

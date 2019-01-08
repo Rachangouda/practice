@@ -1,6 +1,6 @@
 package designpatterns.visitor;
 
-public class LinuxRouteConfigurer implements RouteVisitor{
+public class LinuxRouteConfigurer implements RouteVisitor {
     @Override
     public void visit(TPLinkRouter r) {
         System.out.println("TP link configured for linux");

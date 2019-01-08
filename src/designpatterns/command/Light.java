@@ -3,7 +3,7 @@ package designpatterns.command;
 //receiver on which action are done
 public class Light {
 
-    boolean lightOn=false;
+    boolean lightOn = false;
 
     public boolean isLightOn() {
         return lightOn;

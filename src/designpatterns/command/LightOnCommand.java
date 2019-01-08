@@ -2,10 +2,11 @@ package designpatterns.command;
 
 public class LightOnCommand implements Command {
 
+    Light light;
+
     public LightOnCommand(Light light) {
         this.light = light;
     }
-    Light light;
 
     @Override
     public void excecute() {

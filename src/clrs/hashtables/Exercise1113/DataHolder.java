@@ -13,23 +13,23 @@ public class DataHolder {
         return key;
     }
 
-    public Integer getNoOfRepetitions() {
-        return noOfRepetitions;
-    }
-
     public void setKey(Integer key) {
         this.key = key;
+    }
+
+    public Integer getNoOfRepetitions() {
+        return noOfRepetitions;
     }
 
     public void setNoOfRepetitions(Integer noOfRepetitions) {
         this.noOfRepetitions = noOfRepetitions;
     }
 
-    public void intcrementNoOfRepetiotionsByOne(){
+    public void intcrementNoOfRepetiotionsByOne() {
         noOfRepetitions++;
     }
 
-    public void decrementNoOfRepetitionsByOne(){
+    public void decrementNoOfRepetitionsByOne() {
         noOfRepetitions--;
     }
 }

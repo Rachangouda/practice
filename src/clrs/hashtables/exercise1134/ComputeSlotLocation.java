@@ -6,7 +6,7 @@ public class ComputeSlotLocation {
     public static void main(String[] args) {
 
         Double A = new Double(0);
-        A = (Math.sqrt(5) - 1)/2;
+        A = (Math.sqrt(5) - 1) / 2;
 
         Integer key = new Integer(62);
 
@@ -17,7 +17,7 @@ public class ComputeSlotLocation {
 
         Double result = Math.floor(slots * fraction);
 
-        System.out.println("Result for floor(m(kA mod 1)) where A=sqrt(5)-1 h(" + key +"):" + result);
+        System.out.println("Result for floor(m(kA mod 1)) where A=sqrt(5)-1 h(" + key + "):" + result);
 
     }
 }

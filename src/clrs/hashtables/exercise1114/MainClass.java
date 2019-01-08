@@ -6,9 +6,9 @@ public class MainClass {
 
         HugeArrayDict dict = new HugeArrayDict(10000);
 
-        dict.insert(1,4);
-        dict.insert(1,5);
-        dict.insert(1,6);
+        dict.insert(1, 4);
+        dict.insert(1, 5);
+        dict.insert(1, 6);
 
         dict.delete(1);
         dict.delete(2);

@@ -1,6 +1,6 @@
 package designpatterns.visitor;
 
-public class TPLinkRouter implements Router{
+public class TPLinkRouter implements Router {
 
 
     @Override
