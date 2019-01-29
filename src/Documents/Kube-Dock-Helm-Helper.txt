@@ -1,0 +1,192 @@
+------------------------
+ Kubernitees helpers
+-------------------
+-------------------------------
+install specific version
+-------------------------------
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubeadm && chmod +x ./kubeadm && sudo mv ./kubeadm /usr/local/bin/kubeadm
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubelet && chmod +x ./kubelet && sudo mv ./kubelet /usr/local/bin/kubelet
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+------------------------------------------------------------------------
+minikube start/status/stop
+kubectl version
+kubectl cluster-info #master details
+kubectl get nodes # show all nodes 
+kubectl get pod -n analytics
+#run app on kubernetes
+kubectl run kubernetes-bootcamp --image=gcr.io/google-samples/kubernetes-bootcamp:v1 --port=8080
+#To list your deployments
+kubectl get deployments
+# The kubectl command can create a proxy that will forward communications into the cluster-wide, private network. The proxy can be terminated by pressing control-C and won't show any output while its running.
+kubectl proxy
+kubectl get - list resources
+kubectl describe - show detailed information about a resource
+kubectl logs - print the logs from a container in a pod
+kubectl exec - execute a command on a container in a pod
+
+#list pods configmaps
+kubectl get configmaps -n analytics
+#print configuration
+kubectl get configmaps ingress-controller-leader-ipfix-0-nginx -o yaml
+#edit config then pod will be recreated
+kubectl edit configmaps ingress-controller-leader-ipfix-0-nginx -o yaml -n analytics
+
+#to save config of full system
+kubectl get configmaps -o yaml -n analytics
+
+#Service is load-balancing the traffic. To find out the exposed IP and Port 
+kubectl describe services/kubernetes-bootcamp
+
+#Run a Hello World application in your cluster
+kubectl run hello-world --replicas=5 --labels="run=load-balancer-example" --image=gcr.io/google-samples/node-hello:1.0  --port=8080
+
+#Create a Service object that exposes the deployment:
+kubectl expose deployment hello-world --type=LoadBalancer --name=my-service
+
+#Display detailed information about the Service:
+kubectl get services my-service
+kubectl describe services my-service
+
+#
+kubectl delete services my-service
+kubectl delete deployment hello-world
+
+#get the IP address and port for the Service
+minikube service <servicename> --url
+
+#Monitor commands
+kubectl get events --namespace=my-namespace
+kubectl describe node  <node-name>
+kubectl get node <node-name> -o yaml
+
+#list all containers in kubernetes
+kubectl get pods --all-namespaces -o jsonpath="{..image}" |\
+tr -s '[[:space:]]' '\n' |\
+sort |\
+uniq -c
+
+#list container by pod
+kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' | sort
+
+#List Containers filtering by Pod label
+kubectl get pods --all-namespaces -o=jsonpath="{..image}" -l app=nginx
+
+---------------------------------------------------
+check status of pods
+----------------------------------------------------
+kubectl describe pod  consul-0 --namespace analytics
+kubectl get pod elastic-utils-nqgk9 -n analytics -o yaml | less
+---------------------------------------------------
+export POD_NAME=$(kubectl get pods -o go-template --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}')
+echo Name of the Pod: $POD_NAME
+To see the output of our application, run a curl request.
+
+curl http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/proxy/
+kubectl exec $POD_NAME env
+
+-----------------------
+workaround for IP address not able to allocate not in range
+----------------------
+kubeadm reset
+systemctl stop kubelet
+systemctl stop docker
+rm -rf /var/lib/cni/
+rm -rf /var/lib/kubelet/*
+rm -rf /etc/cni/
+ifconfig cni0 down
+ifconfig flannel.1 down
+ifconfig docker0 down
+ip link delete cni0
+ip link delete flannel.1
+
+then 
+systemctl start docker && systemctl enable docker
+
+#try rm -rf .kube if not works above 
+---------------------------
+
+
+
+=======================================================================================================================================================
+Docker Helpers
+=======================================================================================================================================================
+----------------------------------------------------------
+Docker helper commands
+----------------------------------------------------------
+--verify the docker proxy settings in ./systemd/system/docker.service.d/http-proxy.conf file
+systemctl show --property=Environment docker
+systemctl restart docker
+--create docker container volume 
+docker run -p 80:80 -v /var/data imagename
+--info about volume location and other info
+docker inspect mycontainer
+-------------
+./dockerBuilder.sh --images-file test_images
+
+#tag
+docker tag elastic_sync:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_sync:build_3003
+docker tag rule_hit_detector:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/rule_hit_detector:build_3003
+----------------
+# find ID of your running container:
+docker ps
+# create image (snapshot) from container filesystem
+docker commit 12345678904b5 mysnapshot
+# explore this filesystem using bash (for example)
+docker run -t -i mysnapshot /bin/bash
+
+#delete snapshot using (filesystem of the running container is not affected!):
+docker rmi mysnapshot
+#delete all images
+docker rmi -f $(docker images -a -q)
+#remove/delete by pattern column start with index 0
+docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi
+
+#delete all helms
+helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del ; helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del –purge
+
+  docker container exec
+  docker ps -a | grep snmp
+  docker exec -it e40f6bca6f4c bash
+  docker run -it imagename
+  docker run -p 80:80 imagename   ---<port for machine : port for container   >
+
+
+
+=======================================================================================================================================================
+Helm Helpers
+=======================================================================================================================================================
+#list all running helm charts
+helm ls -a 
+helm delete --purge <chart-name>
+#dependency update
+helm dep up <foochart>
+helm create mychart
+helm package mychart #Archived mychart-0.1.-.tgz
+#find issues with your chart’s formatting or information
+helm lint mychart
+
+-------------------------------------------------------------------
+manual install pods
+-------------------------------------------------------------------
+helm install snmp-generator \
+	--name snmp-generator \
+	--values /root/nss-repo/deployment/k8s/global-values.yaml \
+	--values /root/nss-repo/deployment/k8s/generators/snmp-generator/values.yaml \
+	--values /root/nss-repo/deployment/k8s/generators/snmp-generator/data/snmp_values.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

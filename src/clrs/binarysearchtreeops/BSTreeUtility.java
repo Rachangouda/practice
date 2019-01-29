@@ -221,7 +221,8 @@ public class BSTreeUtility {
 
         if (successorNode.right != null) {
             //successor have right child
-            successorNode.parent.left = successorNode.right;
+            //TODO verify below stmt right =right
+            successorNode.parent.right = successorNode.right;
 
             if (isThisNodeLeftSubTreeNode(node)) {
                 node.parent.left = successorNode;

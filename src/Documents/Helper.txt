@@ -1,0 +1,398 @@
+Rachan VM Details:  
+IP: 10.15.163.122
+Credentials:   User: root, Password: crvmtemplate
+
+Ports: login
+----------------------------
+consule:30500
+app:30000
+elastic db:9200
+keycloak web gui:30543  admin/ss7admin
+----------------------
+
+docker registry login: 
+dockerRegistryAddress="nss-docker-releases.repo.lab.pl.alcatel-lucent.com"
+registryLogin=sigreg
+registryPass=Signa11
+
+Service Desk Phone Number India - 912233056834
+#My components
+snmp collector
+snmp keeper
+index creator
+threat exporter
+nginx proxy map server
+
+
+Building code
+Go to the nss repo path 
+---------------------------
+./gradlew projects
+--------------------------
+./gradlew :administration_services:build -x check
+./gradlew :alarm_handler:build -x check
+./gradlew :house_keeper:build -x check
+./gradlew :nss_common:nss_amqp:build -x check
+./gradlew :nss_common:nss_elastic:build -x check
+./gradlew :nss_common:nss_event:build -x check
+./gradlew :nss_common:nss_utils:build -x check
+./gradlew :rule_hit_detector:build -x check
+./gradlew :snmp_collector:build -x check
+./gradlew :snmp_keeper:build -x check
+./gradlew :threat_exporter:build -x check
+
+#build CPP code
+docker run -it --user root -v `pwd`:/home/work --rm sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/test/cpp_dev_env bash
+cd /home/work
+rm -rf build
+mkdir build
+cd build
+cmake3 .. -DCMAKE_BUILD_TYPE=Coverage
+cmake3 --build . --target nss_threat_detectorCoverage -- -j4
+cmake3 --build . --target nss_ipfix_collectorCoverage -- -j4
+
+rm -rf build
+mkdir build
+cmake3 .. -DCMAKE_BUILD_TYPE=Release
+cmake3 --build . --target nss_threat_detector -- -j4
+cmake3 --build . --target nss_ipfix_collector -- -j4
+--------------------------------------------------
+#integration test
+--------------------------------------------------
+# copy the updated scripts to usr/local/....
+sudo python3 setup.py install --force 
+#pip3 uninstall requests
+pip3 install requests==2.11.1
+increase time stop_max_delay=240000 in AlarmHandlerTestBase in sendevent()
+
+cd /root/nss_repo
+./gradlew integ_cleanup
+./gradlew integ_setup
+cd tests/integration/alarm-handler
+python3.4 run_integration.py 
+
+./gradlew run_python -PtestFilter="alarm-handler"          -- passed
+./gradlew run_python -PtestFilter="fluentd"                --failed
+./gradlew run_python -PtestFilter="ipfix-keeper"           --passed
+./gradlew run_python -PtestFilter="rule-hit-detector"    --passed  --increased mem
+./gradlew run_python -PtestFilter="snmp-collector"        --passed
+./gradlew run_python -PtestFilter="house-keeper"          -- passed
+./gradlew run_python -PtestFilter="consul-config"		--passed
+./gradlew run_python -PtestFilter="elastic-utils"	--passed
+./gradlew run_python -PtestFilter="elastic-sync"	--failed
+./gradlew run_python -PtestFilter="index-creator"   --passed
+./gradlew run_python -PtestFilter="ipfix-chain"		--passed
+./gradlew run_python -PtestFilter="ipfix-collector-rabbit" --passed
+./gradlew run_python -PtestFilter="keycloak-postgres-postgres_sync"  --  passed  ---tests/integration/keycloak-postgres-postgres_sync/tests/helpers helpers.py --host name updated  --test case updated ie added user 'esync'
+./gradlew run_python -PtestFilter="sg-config"  --passed
+./gradlew run_python -PtestFilter="snmp-chain"	--passed
+./gradlew run_python -PtestFilter="snmp-keeper"  --failed 
+./gradlew run_python -PtestFilter="threat-detector"  --passed
+./gradlew run_python -PtestFilter="threat-detector_ipfix-keeper" --passed
+./gradlew run_python -PtestFilter="threat-exporter"  --passed
+
+
+
+#run with one cmd
+./gradlew run_integ_tests -PtestFilter="alarm-handler"
+./gradlew run_integ_tests -PtestFilter="house-keeper"
+--------------------------------------------------
+#snmp-collector hostname chages to connect to local snmp generator & Running in docker
+/root/nss-repo/snmp_collector/src/main/resources/bootstrap.yml
+-->rabbit:ip: rabbitmq.analytics.svc.cluster.local
+
+
+#make sure your network allow TCP traffic in and out, then you could get back your public facing IP with the following command
+curl ifconfig.co
+#check internet working
+wget http://www.google.com
+
+Dev setup versions
+VM ISO used:
+minikube iso version: http://artifactory.devsec.eecloud.dynamic.nsn-net.net:8081/artifactory/sg_repo/kubernetes/minikube/minikube-v0.24.1b-nokia.iso
+
+client binaries used:
+minikube version: v0.24.1 can be used latest or 28
+Kubernetes version for minikube VM 1.10.0
+kubectl version: v1.10.0
+helm version: v2.8.2
+docker version 17.12.1 can be used latest
+
+
+------
+uninstall docker
+yum -y remove docker-ce
+yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-selinux docker-engine-selinux docker-engine
+
+rm -rf /var/lib/docker
+rm -rf /run/docker
+rm -rf /var/run/docker
+rm -rf /etc/docker
+
+install docker 17.12.1
+yum install -y container-selinux
+yum install docker-ce-17.12.1.ce
+systemctl start docker && systemctl enable docker
+
+--------------------------------------------------
+Starting minikube
+-----------------
+minikube start --vm-driver=none --apiserver-name=ddevm --apiserver-ips=10.0.2.15 --extra-conf=kubelet.node-ip=10.0.2.15
+--bootstrapper=localkube
+
+#after boot once
+#if needed 
+#rm -rf ~/.minikube
+#rm -rf ~/.kube
+#rm -rf /etc/kubernetes
+#cd /root/nss_repo_bt/deployment/k8s/env/minikube
+systemctl start docker && systemctl enable docker 
+kubeadm reset
+minikube delete
+echo 1 > /proc/sys/vm/drop_caches
+echo 2 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
+sudo swapoff -a
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+systemctl stop firewalld
+sudo service iptables stop
+cd /root/nss-repo/deployment/k8s/env/minikube
+./start.sh -m 13500
+export no_proxy=$no_proxy,$(minikube ip),minikube
+export NO_PROXY=$NO_PROXY,$(minikube ip),minikube
+cd /etc/kubernetes/addons
+kubectl apply -f dashboard-dp.yaml
+kubectl apply -f dashboard-svc.yaml
+kubectl apply -f kube-dns-cm.yaml
+kubectl apply -f kube-dns-controller.yaml
+kubectl apply -f kube-dns-svc.yaml
+kubectl apply -f storageclass.yaml
+kubectl apply -f storage-provisioner.yaml
+cd /root/nss-repo/deployment/k8s
+export no_proxy=$no_proxy,$(minikube ip),minikube
+export NO_PROXY=$NO_PROXY,$(minikube ip),minikube
+./configure_cluster.sh
+sysctl -w vm.max_map_count=262144
+./start_demo.sh
+
+-------------------------------------------
+#VM Demo installation steps
+-----------------------------------------
+kubeadm reset
+swapoff -a
+echo 1 > /proc/sys/vm/drop_caches
+echo 2 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
+echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+/bin/systemctl stop firewalld
+sudo service iptables stop
+  
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.10.2
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+1.	Login as root user
+2.	Clone the SS7-Dev code in /root/ path
+3.	Execute the 
+	a) cd /root/SS7-Dev/tools/libs  
+	b) pip3 install -r requirements.txt --proxy=$http_proxy 
+	c) python setup.py install –force
+4.	Execute the 
+	a) cd /root/SS7-Dev/deployment/k8s
+	b) kubectl taint nodes --all node-role.kubernetes.io/master-
+	c) ./configure_cluster.sh
+5.	create “ansible_hosts” file in  /root/SS7-Dev/deployment path with below contents
+[role=control]
+euca ansible_connection=local ansible_user=root
+
+6. check the code path and ip in delployment/demo.sh
+	run nss_demo.sh from root folder to create site info
+	a)./nss_demo.sh use for geo mr3_demo.sh
+	b)verify vi /opt/bcmt/siteinfo.yml 
+7.	Execute for installation 
+	a) cd /root/SS7-Dev/deployment
+	b) ./demo.sh load NSS-demo master build_3003     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
+	c) ./demo.sh install ansible_hosts
+8.	Execute for uninstallation  
+	a) cd /root/SS7-Dev/deployment
+	b) ./demo.sh uninstall ansible_hosts
+	c) ./demo.sh unload
+
+http://<your ip>:7447/nginx-console/status.html
+http://10.15.163.122:7447/nginx-console/status.html
+-----------------------------
+#Login to NSS 
+#login URL
+----------------------------
+https://localhost:443
+administrator/Signal1.
+---------------------
+test machine for geo
+10.93.135.85
+root/Jenkins1
+
+SweetFlag SiteA :ssh 10.93.135.93 - manager-1
+10.93.135.94 - manager-2
+10.93.135.95 - Coll1
+10.93.135.96 - Coll2
+GUI: 10.93.118.7 administrator/yt_xk39B
+
+Fenugreek SiteB :ssh 10.93.135.83 - manager-1
+10.93.135.84 - manager-2
+10.93.135.90 - Coll1
+10.93.135.97 - Coll2
+GUI: 10.93.118.12 administrator/yt_xk39B
+
+-------------------------------------------------------
+Memory status analytics
+-------------------------------------------------------
+http://trustmeiamadeveloper.com/2016/03/18/where-is-my-memory-java/
+https://developers.redhat.com/blog/2017/03/14/java-inside-docker/
+-------------------------------------------------------
+
+---------------------
+Test Server for config verification
+---------------------------------------
+10.93.135.79
+siem_user/Jenkins1
+-------------------------------
+
+Dev VM 
+----------------
+10.159.252.119
+root/Peramuthan2810*
+
+--- pwd for audior user
+Audito1!
+
+-----------------------------------------------
+unix helpers
+---------------------------------------------
+#check service is running
+netstat -a |grep LISTEN |egrep "sftp|ssh"
+#find the service running on port 
+netstat -tulnp | grep <portno>
+#zip tar command
+tar -cvf tarfilename.tar  <foldertobezipped> --exclude .git --exclude "*.log"
+iptables -L -n
+#flush iptables
+sudo iptables -F
+
+#clear system cache/memory
+https://www.getpagespeed.com/server-setup/clear-disk-space-centos
+
+-----------------------------------------
+firewall rule config
+------------------------------------------
+firewall-cmd --permanent --zone=geored --add-rich-rule='
+  rule family="ipv4"
+  source address="10.15.163.123"
+  port protocol="tcp" port="443" accept'
+
+Check the zone file later to inspect the XML configuration
+cat /etc/firewalld/zones/geored.xml
+
+. ~/.bashrc #reload bash 
+ss -lptn 'sport = :8080' # list process running on port
+
+#disk space usage 
+#folder wise -m==in mega byte
+du -xm /usr/share/elasticsearch | sort -nr
+du -sh * | sort -h
+
+firewall-cmd --reload
+---------------------
+sudo iptables -A INPUT -s 10.15.163.122 -j ACCEPT
+
+------------------------------------------------------
+TCP dump 
+tcpdump -i any port 80 or port 3128 -w esync.pcap
+tcpdump -i port 443 -w esync.pcap
+----------------------------
+
+
+
+Repo change
+-------------------------------------------
+#rajdeep given sftp server
+root/mainstreet 
+http://10.75.33.59/images/test-threat-exporter/
+
+http://10.75.33.59/images/sg_repo/
+http://sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/webapp/#/artifacts/browse/tree/General/nss-docker-candidates
+
+--old
+#docker images
+docker.mbbsec.dev.eecloud.dynamic.nsn-net.net/master/base
+#Artifactory
+artifactory.devsec.eecloud.dynamic.nsn-net.net	
+
+--new
+#docker
+nss-docker-releases.repo.lab.pl.alcatel-lucent.com
+#Artifactory
+10.75.33.59-->new repo.lab.pl.alcatel-lucent.com
+path:: http://repo.lab.pl.alcatel-lucent.com/nss-generic-releases/nss_sg_repo/sg_repo/
+http://sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/webapp/#/artifacts/browse/tree/General/nss-mvn-dependencies
+csd alternative
+------------
+String replace in files
+sed -i 's/artifactory\.devsec\.eecloud\.dynamic\.nsn-net\.net/10\.75\.33\.59/g' *
+## i~ --backup
+
+#only file name like Dockerfile are replaced
+find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.md" -o -name "*.gradle" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/10\.75\.33\.59/repo\.lab\.pl\.alcatel-lucent\.com/g;'
+
+find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.md" -o -name "*.gradle" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/ARTIFACTORY_ADDRESS:8081/ARTIFACTORY_ADDRESS/g;'
+find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.md" -o -name "*.gradle" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/ARTIFACTORY_ADDRESS\/artifactory\/sg_repo/ARTIFACTORY_ADDRESS\/nss-generic-releases\/nss_sg_repo\/sg_repo/g;'
+
+
+
+#Must be run at the end 
+#for only docker address main 
+#lookup:docker\.mbbsec\.dev\.eecloud\.dynamic\.nsn-net\.net
+docker.mbbsec.dev.eecloud.dynamic.nsn-net.net
+#replace:nss-docker-releases\.repo\.lab\.pl\.alcatel-lucent\.com
+nss-docker-releases.repo.lab.pl.alcatel-lucent.com
+find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/docker\.mbbsec\.dev\.eecloud\.dynamic\.nsn-net\.net/nss-docker-releases\.repo\.lab\.pl\.alcatel-lucent\.com/g;'
+
+--------------------------------------------------------
+#Artifactory replace
+
+artifactory.devsec.eecloud.dynamic.nsn-net.net:8081/artifactory/sg_repo
+
+#lookup:artifactory\.devsec\.eecloud\.dynamic\.nsn-net\.net:8081\/artifactory\/sg_repo
+#replace:10\.75\.33\.59\/images\/sg_repo
+find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/artifactory\.devsec\.eecloud\.dynamic\.nsn-net\.net:8081\/artifactory\/sg_repo/10\.75\.33\.59\/images\/sg_repo/g;'
+
+
+-------------------------------------------
+RHD
+--per site
+--kibana to show seperate viz per site
+--raise alarm based on local site inf only
+--alarm raising is completely independednt
+--index change per site
+
+Alarm
+--per site
+
+
+kibana
+--index searching and showing data 
+--Create new dashboard to show msu and threatids 
+--dashboard counts are combined?
+--all viz should be verified
+
+SNMP collector
+--
+no issue msu/s
+
+1)default geo --> false in GUI
+2)enable in GUI > sync to remote from installation
+3)GUI has new tab for remote IP and port
+4)dynamicaly pickup remote ip port for sync
+5)disable 

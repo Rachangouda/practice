@@ -1,0 +1,64 @@
+--------------------------------
+git helper commands
+--------------------------------
+#new repo india
+https://gerrit.ext.net.nokia.com/gerrit/#/admin/projects/
+git clone https://gerrit.ext.net.nokia.com/gerrit/DN/NSS/dev/SS7
+git clone ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
+#old ssh://rgouda@gerrit.mbbsec.dev.eecloud.dynamic.nsn-net.net:29418/SS7-Dev
+
+#code checkout
+#go to folder to be checkedin 
+git init
+git remote add origin ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
+git fetch origin
+git reset origin/master --hard
+
+#checkuot of perticular branch
+git clone -b <branch> <remote_repo>
+git clone -b elastic-sync  ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
+
+#modified files 
+git status 
+#save local updates and revert to original state
+git stash
+#get latest from server
+git pull
+#merge from local saved updated version
+git stash pop
+
+#find deleted files in repo
+git log --diff-filter=D --summary
+#find url
+git config --get remote.origin.url
+git remote show origin
+#list modified files
+git ls-files -md
+#create patch file
+git diff --catched >> file.patch
+
+#export changed files
+git archive -o update.zip HEAD $(git diff --name-only HEAD^)
+
+#code commit
+git status -uno
+git add <filepath>
+git commit --amend
+git push origin HEAD:refs/for/master
+
+-----------------------------------------
+
+----------
+#Git commit
+git commit -m "SG-3835 drop-2 and SG-4273 Disk full check monitoring and Graying out few fields for sg-4273"
+git push origin HEAD:refs/for/master
+#first time only
+ gitdir=$(git rev-parse --git-dir);
+ scp -p -P 29418 rgouda@gerrit.ext.net.nokia.com:hooks/commit-msg ${gitdir}/hooks/
+git commit --amend
+
+# in case of mistekenly commited insted of amend to submitted code that requires the review chnages to be resubmit
+git reset HEAD^
+git commit --amend
+git push origin HEAD:refs/for/master
+-----------
