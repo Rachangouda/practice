@@ -7,12 +7,18 @@ git clone https://gerrit.ext.net.nokia.com/gerrit/DN/NSS/dev/SS7
 git clone ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
 #old ssh://rgouda@gerrit.mbbsec.dev.eecloud.dynamic.nsn-net.net:29418/SS7-Dev
 
+#kibana source code
+git clone ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/nss-kibana
+
 #code checkout
 #go to folder to be checkedin 
 git init
 git remote add origin ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
 git fetch origin
 git reset origin/master --hard
+
+#fetch origin to update with central repo
+git pull origin master
 
 #checkuot of perticular branch
 git clone -b <branch> <remote_repo>
@@ -50,7 +56,7 @@ git push origin HEAD:refs/for/master
 
 ----------
 #Git commit
-git commit -m "SG-3835 drop-2 and SG-4273 Disk full check monitoring and Graying out few fields for sg-4273"
+git commit -m "condenarc upgrade to 0.25.2 to 1.4 to fix jenkins build failures in nss_common and testcase corrections"
 git push origin HEAD:refs/for/master
 #first time only
  gitdir=$(git rev-parse --git-dir);
@@ -62,3 +68,4 @@ git reset HEAD^
 git commit --amend
 git push origin HEAD:refs/for/master
 -----------
+git push origin HEAD:refs/for/v5.6.12-nss

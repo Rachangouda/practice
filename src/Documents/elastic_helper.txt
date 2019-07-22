@@ -1,0 +1,211 @@
+cd /etc/nss/configuration/nss-current/passwords_and_certificates/certs
+
+REST API Format : http://host:port/[index]/[type]/[_action/id]
+ --connect to eleastic db in VM
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/.kibana/_search?pretty=true'
+
+--list all indices 
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/_cat/indices?pretty=true'
+--#v? means verbose output
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/_cat/indices?v'
+health status index                                  uuid                   pri rep docs.count docs.deletedeleted store.size pri.store.size
+green  open   ipfix_base-default-2018.11.12          IH9ns55FQZqGYi4-OdSyMQ   1   0       9829            0     12.2mb         12.2mb
+green  open   ipfix_matched_rules-default-2018.11.12 0liD7ukiS1mnNA6jvl38DA   1   0       9831            0      7.3mb          7.3mb
+
+--show the table meta data
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/ipfix_base-default-2018.11.13?pretty=true'
+
+--list all records in indices
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/ipfix_matched_rules-default-2018.11.12/threats/_search?pretty=true'
+
+-- list perticulat column values from all the records
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem  -X GET https://10.0.2.15:9200/ipfix_base-default-2018.11.12/threats/_search?pretty=true -H 'Content-Type: application/json' -d '{	"_source" : ["ituMapHGmlcAddressAddrv6"]}'
+
+--query a field for specific value
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem  -X GET https://10.0.2.15:9200/ipfix_base-default-2018.11.12/threats/_search?pretty=true -H 'Content-Type: application/json' -d '{	"_source" : ["sccpCdpaTt"], "query" : { "term" : {"sccpCdpaTt" : "131"}}}'
+
+curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
+{
+    "stored_fields" : ["user", "postDate"],
+    "query" : {
+        "term" : { "user" : "kimchy" }
+    }
+}
+'
+
+
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/ipfix_base-default-2018.11.12/threats/_search?pretty=true'
+
+#list all indices
+curl 'localhost:9200/_cat/indices?format=json&pretty'
+
+#alias names to indices
+curl -X GET "localhost:9200/_cat/aliases?v"
+	
+#serach twi* in index column of indices
+curl -X GET "localhost:9200/_cat/indices/twi*?v&s=index"
+
+#cluster health
+curl -XGET http://localhost:9200/_cluster/health?pretty #minimal
+curl 'localhost:9200/_cluster/state?format=json&pretty'
+
+#get shard status
+curl -XGET http://localhost:9200/_cat/shards?v
+
+#filter data fields https://www.elastic.co/guide/en/elasticsearch/reference/1.6/common-options.html
+_search?pretty&filter_path=took,hits.hits._id,hits.hits._score
+
+#geo-test
+---------------------------------------------------------------
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.123:9200/_cat/indices?pretty=true'
+
+#see content
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/ipfix_base-euca-2019.03.04/_search?pretty=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.75.86.67:9200/.kibana/_search?pretty=true'
+
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/alarm-euca/_search?pretty=true&version=true'
+
+#cluster node disk stats https://www.elastic.co/guide/en/elasticsearch/reference/1.6/cluster-nodes-stats.html
+-XGET 'https://10.15.163.122:9200/_nodes/stats/fs?pretty=1'
+-XGET 'https://10.15.163.122:9200/_nodes/sg-elastic-data/stats/fs/?pretty=1'
+#cluser stats 
+ -XGET 'https://10.15.163.122:9200/_cluster/stats?human&pretty'
+#cluster state
+-XGET 'https://10.15.163.122:9200/_cluster/state?human&pretty'
+#cluster settings
+-XGET 'https://10.15.163.122:9200/_cluster/settings?human&pretty'
+-XGET 'https://10.10.10.2:9200/_nodes/_all/settings?human&pretty'
+#cluster health
+_cluster/health?pretty
+
+-XGET 'https://10.15.163.122:9200/_cat/alarm-sitea/settings?human&pretty'
+
+#disk allocation
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/_cat/allocation?human&pretty'
+#show stats in bytes and filter header column
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.93.135.93:9200/_cat/allocation/sg-elastic-data?bytes=b&h=disk.indices'
+
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/_cluster/allocation/explain?human&pretty&include_disk_info=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.75.86.67:9200/_nodes/sg-elastic-data/stats/fs/?pretty=1&filter_path=fs.total.total_in_bytes'
+
+#run inside alarm container --not tested
+curl -k --cert truststore.jks --key alarm-handler-keystore.jks -H "Content-Type: application/json" -X POST -d '[{"name": "RULE_HIT_THRESHOLD_UP","cause": "Meaninglesstest update cause","timestamp": "1561368771000","server": "manager1","siteName": "siteA","variables": {"ACTUAL_VALUE": "2000","RULE_ID": "alarmToRemoveActive-20190624_0827.AW13","THRESHOLD": "1000","INTERVAL": "2"}}]' https://localhost:8443/events
+
+#working
+cd /etc/nss/configuration/nss-current/passwords_and_certificates/certs
+
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://10.15.163.122:9200/ipfix_base-euca-2019.01.11/threats/2" -H 'Content-Type: application/json' -d '{"accessList": "defaultRuleSetOverlay.aclOverlayHplmnOriginating_123", "accessListMode": "deny", "accessStatement": 50, "mode": "enforcing", "observationTimeMilliseconds": 1553675429000}'
+
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://10.15.163.122:9200/ipfix_matched_rules-euca-2019.03.27/threats/1" -H 'Content-Type: application/json' -d '{"accessList": "defaultRuleSetOverlay.aclOverlayHplmnOriginating_123", "accessListMode": "deny", "accessStatement": 50, "mode": "enforcing", "observationTimeMilliseconds": 1553675429000}'
+
+
+#alarm insert
+
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://138.120.32.145:9200/alarm-euca/data/1000_euca_euca_1546257474000" -H 'Content-Type: application/json' -d '{"name": "THREATS_EXPORT_FAILURE",
+    "secondId": "euca",
+    "alarmState": "CLEARED",
+    "createTimestamp": "1546257474000",
+    "updateTimestamp": "1546257474000",
+    "clearTimestamp": "1546257474000",
+    "server": "euca-manager-1",
+    "siteName": "euca",
+    "alarmId": 1000,
+    "severity": "MAJOR",
+    "actionForOperations": "",
+    "probableCause": "Not able to export SIEM or SFTP server is not accessible.",
+    "repairAction": "",
+    "eventCount": 2,
+    "events": [
+      {
+        "name": "THREATS_EXPORT_RETRIEVE_CONFIG_FAILED",
+        "timestamp": "1546257474000",
+        "server": "euca-manager-1",
+        "cause": "Cannot retrieve configuration from KV storage",
+        "secondId": "euca",
+        "siteName": "euca"
+      },
+      {
+        "name": "THREATS_EXPORT_SUCCESS",
+        "timestamp": "1546257474000",
+        "server": "euca-manager-1",
+        "cause": "Threats export success",
+        "secondId": "euca",
+        "siteName": "euca"
+      }
+    ]}'
+
+#count 
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/ipfix_base*/threats/_count'
+
+#delete query	
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST 'https://10.15.163.123:9200/ipfix*/_delete_by_query' -d '{"query":{"match_all":{}}}'
+
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST 'https://10.15.163.123:9200/ipfix*/_delete_by_query' -d '{"query":{"term":{ "<match value>"}}}'
+
+#search
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/_search' -H 'Content-Type: application/json' -d'
+{"query": {
+        "range" : {
+            "updateTimestamp" : {
+                "gte" : 1551690268323,
+                "lt" : 1551690268324,
+                "boost" : 1.0
+            }
+        }
+    }
+}
+'
+
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/.kibana/_search?scroll=100m&size=200&pretty=true' -d '{
+    "query" : {
+       "terms": {
+      "_type": [ "config" ]
+    }
+	}
+}'
+
+
+,
+          "multi_match" : {
+            "query":      "15620",
+            "fields":     [ "buildNum" ]
+          }
+    }
+
+
+1551690268323
+1551690268323
+--------------------------------------------------
+
+MR4
+4032-disk usage
+3917(mine)
+4150
+4165(3809)
+2940
+
+
+
+https://discuss.elastic.co/t/getting-unavailableshardsexception-sometimes-only/49063/2
+https://stackoverflow.com/questions/44364968/unavailable-shards-exception-reason-primary-shard-is-not-active?rq=1
+https://grokbase.com/t/gg/elasticsearch/12aq7nga93/recovering-from-a-potentially-corrupt-cluster-state-unavailableshardsexception
+
+https://community.pega.com/support/support-articles/indexing-fails-unavailableshardsexception
+
+when master node goes down then we will get this error.
+clearoff the data folder then it will fix 
+
+SETTING_WAIT_FOR_ACTIVE_SHARDS parameter default to 1
+read only file system?
+
+Disk usage above allowed range?
+
+TransportBulkAction class doRun()- bulkrequest.waitforactiveShards() -->default value is -2?
+timeout=5min parameter set when primary shard is not availble so index writer will wait default val is 1 min.
+
+replica shard=0 in charts -- 
+replica shards will become primary chards when the node holding primary shards goes down.
+
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html#index-wait-for-active-shards
+https://www.elastic.co/guide/en/elasticsearch/guide/current/replica-shards.html
