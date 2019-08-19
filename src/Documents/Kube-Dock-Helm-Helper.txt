@@ -155,8 +155,8 @@ docker tag fluentd:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com
 docker tag kibana:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/kibana:build_3009
 ----------------
 #manual pull images
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3017
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3020
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3020
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3017
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3017
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3017
@@ -176,7 +176,7 @@ docker rmi mysnapshot
 #delete all images
 docker rmi -f $(docker images -a -q)
 docker system prune -a -f
-docker rmi -f $(docker images | grep "<none>" | awk '{print $3}')
+docker rmi -f $(docker images | grep "build_3017" | awk '{print $3}')
 #remove/delete by pattern column start with index 0 forcefully
 docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi -f
 docker container ls -a
@@ -196,7 +196,23 @@ helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del ; helm ls --a
 
 #check docker state
 docker inspect -f '{{.State.Running}}' $container_name
+-----------------------------------
+proxy settings
+-------------------
+cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf[Service]
+Environment="HTTP_PROXY=http://inban1b-proxy.apac.nsn-net.net:8080"
+Environment="HTTPS_PROXY=http://inban1b-proxy.apac.nsn-net.net:8080"
+EOF
+which proxy do you use now
+try any of these,
+export http_proxy="http://inban1b-proxy.apac.nsn-net.net:8080"
+export http_proxy=http://proxy.lbs.alcatel-lucent.com:8000/
+export https_proxy=https://proxy.lbs.alcatel-lucent.com:8000/
+export http_proxy=http://inmum1a-proxy.apac.nsn-net.net:8080/
+export HTTPS_PROXY=87.254.212.120:8080/
 
+systemctl daemon-reload
+systemctl restart docker
 =======================================================================================================================================================
 Helm Helpers
 =======================================================================================================================================================
@@ -228,7 +244,8 @@ helm delete --purge kibana;
 helm install --name kibana /etc/nss/configuration/nss-current/charts/kibana --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/overrides.yaml
 
 citm-ingress
-helm install --name citm-ingress /etc/nss/configuration/nss-master-build_3017_2019-06-28_12-36-25/charts/citm-ingress --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-master-build_3017_2019-06-28_12-36-25/charts/citm-ingress/values.yaml --values /etc/nss/configuration/nss-master-build_3017_2019-06-28_12-36-25/charts/citm-ingress/overrides.yaml
+helm delete --purge citm-ingress
+helm install --name citm-ingress /etc/nss/configuration/nss-current/charts/citm-ingress --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/overrides.yaml
 
 
 

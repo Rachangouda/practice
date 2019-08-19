@@ -57,7 +57,7 @@ _search?pretty&filter_path=took,hits.hits._id,hits.hits._score
 
 #geo-test
 ---------------------------------------------------------------
-curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.123:9200/_cat/indices?pretty=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/_cat/indices?pretty=true'
 
 #see content
 curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/ipfix_base-euca-2019.03.04/_search?pretty=true'

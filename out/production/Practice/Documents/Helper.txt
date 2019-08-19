@@ -2,12 +2,20 @@ Rachan VM Details:
 IP: 10.15.163.122
 Credentials:   User: root, Password: crvmtemplate
 
+Netnumber 
+---------
+Username: rachan.gouda@nokia.com/Naga@123
+
+3uk openvpn login
+j.abhijith/
+
 Ports: login
 ----------------------------
 consule:30500
 app:30000
 elastic db:9200
 keycloak web gui:30543  admin/ss7admin
+kibana:https://10.15.163.122:30601 admin/admin
 ----------------------
 
 docker registry login: 
@@ -29,17 +37,20 @@ Go to the nss repo path
 ---------------------------
 ./gradlew projects
 --------------------------
-./gradlew :administration_services:build -x check
-./gradlew :alarm_handler:build -x check
-./gradlew :house_keeper:build -x check
-./gradlew :nss_common:nss_amqp:build -x check
-./gradlew :nss_common:nss_elastic:build -x check
-./gradlew :nss_common:nss_event:build -x check
-./gradlew :nss_common:nss_utils:build -x check
-./gradlew :rule_hit_detector:build -x check
-./gradlew :snmp_collector:build -x check
-./gradlew :snmp_keeper:build -x check
-./gradlew :threat_exporter:build -x check
+./gradlew :administration_services:build -x check failed build
+./gradlew :alarm_handler:build -x check --pass tfail-6
+./gradlew :elastic_sync:build -x check --pass tfail-28
+./gradlew :house_keeper:build -x check --pass tfail-8
+./gradlew :ipfix_keeper:build -x check --pass tfail-7
+./gradlew :nginx:build -x check --failed build
+./gradlew :nss_common:nss_amqp:build -x check --pass 
+./gradlew :nss_common:nss_elastic:build -x check --pass tfail-1
+./gradlew :nss_common:nss_event:build -x check --pass
+./gradlew :nss_common:nss_utils:build -x check --pass
+./gradlew :rule_hit_detector:build -x check --passed tfail-5
+./gradlew :snmp_collector:build -x check --pass
+./gradlew :snmp_keeper:build -x check --pass tfail-6
+./gradlew :threat_exporter:build -x check --pass tfail-24
 
 #build CPP code
 docker run -it --user root -v `pwd`:/home/work --rm sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/test/cpp_dev_env bash
@@ -56,6 +67,19 @@ mkdir build
 cmake3 .. -DCMAKE_BUILD_TYPE=Release
 cmake3 --build . --target nss_threat_detector -- -j4
 cmake3 --build . --target nss_ipfix_collector -- -j4
+
+build kibana images
+--------------------
+
+
+./run.sh --npm-registry http://registry.npmjs.org/ --proxy-addr http://10.158.100.1:8080 --no-proxy 10.15.163.122 --image-name nss-kibana-rpmbuilder:latest --build-branch v5.6.15-nss
+
+npm config set proxy http://10.158.100.1:8080
+npm config set https-proxy http://10.158.100.1:8080
+npm config set registry http://registry.npmjs.org/
+yarn config set proxy http://10.158.100.1:8080
+yarn config set https-proxy http://10.158.100.1:8080
+yarn config set registry http://registry.npmjs.org/
 --------------------------------------------------
 #integration test
 --------------------------------------------------
@@ -70,23 +94,23 @@ cd /root/nss_repo
 ./gradlew integ_setup
 cd tests/integration/alarm-handler
 python3.4 run_integration.py 
-
-./gradlew run_python -PtestFilter="alarm-handler"          -- passed
-./gradlew run_python -PtestFilter="fluentd"                --failed
+#change the docker logging driver to fluentd
+./gradlew run_python -PtestFilter="alarm-handler"          -- passed 
+./gradlew run_python -PtestFilter="fluentd"                --passed 
 ./gradlew run_python -PtestFilter="ipfix-keeper"           --passed
-./gradlew run_python -PtestFilter="rule-hit-detector"    --passed  --increased mem
+./gradlew run_python -PtestFilter="rule-hit-detector"    --passed  --increased mem 
 ./gradlew run_python -PtestFilter="snmp-collector"        --passed
-./gradlew run_python -PtestFilter="house-keeper"          -- passed
-./gradlew run_python -PtestFilter="consul-config"		--passed
-./gradlew run_python -PtestFilter="elastic-utils"	--passed
-./gradlew run_python -PtestFilter="elastic-sync"	--failed
-./gradlew run_python -PtestFilter="index-creator"   --passed
+./gradlew run_python -PtestFilter="house-keeper"   ^       -- passed--increased months to 3
+./gradlew run_python -PtestFilter="consul-config"		--passed  --change helper.py sitename ie euca or sitea
+./gradlew run_python -PtestFilter="elastic-utils" f	--passed(bfsync) --failed -- kibana settings --passed
+./gradlew run_python -PtestFilter="elastic-sync"	--passed
+./gradlew run_python -PtestFilter="index-creator"  ^ --passed
 ./gradlew run_python -PtestFilter="ipfix-chain"		--passed
 ./gradlew run_python -PtestFilter="ipfix-collector-rabbit" --passed
 ./gradlew run_python -PtestFilter="keycloak-postgres-postgres_sync"  --  passed  ---tests/integration/keycloak-postgres-postgres_sync/tests/helpers helpers.py --host name updated  --test case updated ie added user 'esync'
 ./gradlew run_python -PtestFilter="sg-config"  --passed
 ./gradlew run_python -PtestFilter="snmp-chain"	--passed
-./gradlew run_python -PtestFilter="snmp-keeper"  --failed 
+./gradlew run_python -PtestFilter="snmp-keeper"  --passed
 ./gradlew run_python -PtestFilter="threat-detector"  --passed
 ./gradlew run_python -PtestFilter="threat-detector_ipfix-keeper" --passed
 ./gradlew run_python -PtestFilter="threat-exporter"  --passed
@@ -119,6 +143,10 @@ helm version: v2.8.2
 docker version 17.12.1 can be used latest
 
 
+----------------
+keycloak 
+--------------
+dump location /var/postgres_sync/dbdump
 ------
 uninstall docker
 yum -y remove docker-ce
@@ -187,8 +215,8 @@ echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 /bin/systemctl stop firewalld
 sudo service iptables stop
   
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.10.2
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.13.4
+echo y|sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
@@ -199,11 +227,14 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 3.	Execute the 
 	a) cd /root/SS7-Dev/tools/libs  
 	b) pip3 install -r requirements.txt --proxy=$http_proxy 
-	c) python setup.py install –force
+	c) python setup.py install --force
 4.	Execute the 
 	a) cd /root/SS7-Dev/deployment/k8s
 	b) kubectl taint nodes --all node-role.kubernetes.io/master-
-	c) ./configure_cluster.sh
+	c) edit configure_cluster.sh add host name
+	c) ./configure_cluster.sh 
+	#if ERROR:Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list configmaps in the namespace "kube-system"
+	kubectl create rolebinding default-view --clusterrole=view --serviceaccount=kube-system:default --namespace=kube-system
 5.	create “ansible_hosts” file in  /root/SS7-Dev/deployment path with below contents
 [role=control]
 euca ansible_connection=local ansible_user=root
@@ -213,8 +244,8 @@ euca ansible_connection=local ansible_user=root
 	a)./nss_demo.sh use for geo mr3_demo.sh
 	b)verify vi /opt/bcmt/siteinfo.yml 
 7.	Execute for installation 
-	a) cd /root/SS7-Dev/deployment
-	b) ./demo.sh load NSS-demo master build_3003     cp bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
+	a) cd /root/SS7-Dev/deployment && cp /root/demo.sh /root/SS7-Dev/deployment
+	b) ./demo.sh load NSS-demo master build_3020     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
 	c) ./demo.sh install ansible_hosts
 8.	Execute for uninstallation  
 	a) cd /root/SS7-Dev/deployment
@@ -234,11 +265,55 @@ test machine for geo
 10.93.135.85
 root/Jenkins1
 
-SweetFlag SiteA :ssh 10.93.135.93 - manager-1
-10.93.135.94 - manager-2
-10.93.135.95 - Coll1
-10.93.135.96 - Coll2
-GUI: 10.93.118.7 administrator/yt_xk39B
+1048576
+$export MIBS=ALL
+
+# - manager-1 sender snmp
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.66
+# -receiver 
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.101
+
+
+#console service start 
+snmptrapd -f -C -c  /etc/snmp/snmptrapd.conf -Le
+#numaric display of oid
+snmptrapd -f -C -c  /etc/snmp/snmptrapd.conf -Le -On
+snmpd -a -f -C -c  /etc/snmp/snmpd.conf -Le
+
+#chek after snmp service restart 
+grep oldEngineID /var/lib/net-snmp/snmpd.conf
+
+#process checks
+1301 SSH server stopped
+ps -e | grep sshd
+netstat -anp | grep :162
+kill <>
+
+1302 alarm: NTP Client/Server stopped
+systemctl stop ntpd
+
+
+snmp sender:10.93.135.66,67,68,74 
+snmp intermediate receiver: 10.93.135.66 
+snnp receiver:10.93.135.101
+
+Manager-1	0x1000100930135066 10.93.135.66
+Manager-2	0x2000100930135067
+Collector-1	0x3000100930135068
+Collector-2	0x4000100930135074
+
+
+Cardamom SiteA : 10.93.135.65 install server
+# - manager-1 sender snmp
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.66
+# - manager-2 receiver
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.67
+# - Coll1
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.68
+# - Coll2
+ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.74
+
+GUI: 10.93.118.17 administrator/yt_xk39B
 
 Fenugreek SiteB :ssh 10.93.135.83 - manager-1
 10.93.135.84 - manager-2
@@ -275,15 +350,67 @@ unix helpers
 netstat -a |grep LISTEN |egrep "sftp|ssh"
 #find the service running on port 
 netstat -tulnp | grep <portno>
+#count no of open connection on port
+netstat -anp | grep  -w 443 | grep ESTABLISHED | wc -l
 #zip tar command
 tar -cvf tarfilename.tar  <foldertobezipped> --exclude .git --exclude "*.log"
 iptables -L -n
 #flush iptables
 sudo iptables -F
+iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
+#file transfer
+scp -i clcmos-login-17.06-00.id_rsa upd11.30mib.tar.gz root@10.93.135.67:/root/
+scp -i clcmos-login-17.06-00.id_rsa root@10.93.135.66:/root/audit_backup.tar .
+scp -i clcm_pri_key root@10.75.86.35:/root/es-client-mgr1.log .
+scp -i clcm_pri_key root@10.75.86.36:/root/es-client-mgr2.log .
+scp -i clcm_pri_key root@10.75.86.37:/root/es-client-cl1.log .
+scp -i clcm_pri_key root@10.75.86.35:/root/es-data-mgr1.log .
+scp -i clcm_pri_key root@10.75.86.36:/root/es-data-mgr2.log .
+scp -i clcm_pri_key root@10.75.86.35:/root/citm-mr2.log .
+scp -i clcm_pri_key root@10.75.86.35:/var/log/kibana-timeout.log .
+#extract run file
+sh nokia-nss-clcm-repo-additions_build_59.run --noexec --target <dir>
+
+#find open ports
+sudo lsof -i -P -n | grep LISTEN 
+sudo netstat -tulpn | grep LISTEN
+sudo nmap -sTU -O IP-address-Here
+docker ps | grep <port>
+
+#rpm check
+#list the rpms installed
+rpm -qa | grep nss
+#list the files in installed rpm
+rpm -ql nss-tools-3.36.0-7.el7_5.x86_64
+#list files in rpm
+rpm -qlp secpam-dosmon-2.4.4-1.606.x86_64.rpm
+#grep inside the rpm
+grep -r  "SNMPnormalization" $(rpm -ql nokia_nss_sms-17.5-build_37.x86_64)
+
+grep -r "audit" $(rpm -qlp secpam-dosmon-2.4.4-1.606.x86_64.rpm)
+grep -r "audit" $(rpm -ql nss-tools-3.36.0-7.el7_5.x86_64)
+grep -r "audit" $(rpm -ql openssh-clients-7.4p1-16.el7.x86_64)
+grep -r "audit" $(rpm -ql openssl-1.0.2k-12.el7.x86_64)
+grep -r "audit" $(rpm -ql openssl-libs-1.0.2k-12.el7.x86_64)
+grep -r "audit" $(rpm -ql openssh-server-7.4p1-16.el7.x86_64)
+grep -r "audit" $(rpm -ql nss-util-3.36.0-1.el7_5.x86_64)
+grep -r "audit" $(rpm -ql nss-softokn-freebl-3.36.0-5.el7_5.x86_64)
+grep -r "audit" $(rpm -ql nss-sysinit-3.36.0-7.el7_5.x86_64)
+grep -r "audit" $(rpm -ql nokia_nss_sms-17.5-build_37.x86_64)
+grep -r "audit" $(rpm -ql nokia_nss_ss7_python_deps-17.5-build_7.x86_64)
+grep -r "audit" $(rpm -ql nokia_nss_tools-17.5-build_364.x86_64)
+grep -r "audit" $(rpm -ql openssl-devel-1.0.2k-12.el7.x86_64)
+grep -r "audit" $(rpm -ql nss-softokn-3.36.0-5.el7_5.x86_64)
+grep -r "audit" $(rpm -ql nokia_nss_default_ruleset-17.5-build_86.x86_64)
+grep -r "audit" $(rpm -ql nss-pem-1.0.3-4.el7.x86_64)
+grep -r "audit" $(rpm -ql xmlsec1-openssl-1.2.20-7.el7_4.x86_64)
+grep -r "audit" $(rpm -ql openssh-7.4p1-16.el7.x86_64)
+
 
 #clear system cache/memory
 https://www.getpagespeed.com/server-setup/clear-disk-space-centos
-
+du -sh *
+df -kh
 -----------------------------------------
 firewall rule config
 ------------------------------------------
@@ -306,14 +433,35 @@ du -sh * | sort -h
 firewall-cmd --reload
 ---------------------
 sudo iptables -A INPUT -s 10.15.163.122 -j ACCEPT
-
+sudo iptables -I INPUT -p tcp --dport 5905 -j ACCEPT
+sudo service iptables save
+#save iptable rules
+iptables-save > ~/iptables.rules
+#restore iptable rules
+iptables-restore < ~/iptables.rules
 ------------------------------------------------------
 TCP dump 
-tcpdump -i any port 80 or port 3128 -w esync.pcap
+tcpdump -i any port 161 or port 162 -w snmp.pcap
 tcpdump -i port 443 -w esync.pcap
+udp.port==162 
+tcpdump -i any -nnn port 65432
 ----------------------------
+whereis java
 
+----
+X11 forward settings
+-----------------
+yum install xorg-x11-xauth xorg-x11-fonts-* xorg-x11-font-utils xorg-x11-fonts-Type1
+touch .Xauthority && chmod 600 .Xauthority
+/etc/ssh/sshd_config
+AddressFamily inet; AllowTcpForwarding yes; X11Forwarding yes; X11DisplayOffset 10;
+X11UseLocalhost yes
 
+snmptrap -c public -v 2c 127.0.0.1 "" 1.3.6.1.2.1.43.18.2.0.1
+---------
+Disable IPV6 
+https://www.unixmen.com/disable-ipv6-centos-7/
+--------------
 
 Repo change
 -------------------------------------------
@@ -370,29 +518,220 @@ find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml
 
 
 -------------------------------------------
-RHD
---per site
---kibana to show seperate viz per site
---raise alarm based on local site inf only
---alarm raising is completely independednt
---index change per site
+test install
+========
+https://cloud01.tre.nsn-rdnet.net/ui/index.php?project=DN-DDE&page=Labs&name=CLAB135
+18:46
+Manjunath Jogin
+dn-dde-admin/LabAcc0unt
+18:47
+Passw0rd!
+18:49Baitanik Talukder
+Manjunath Jogin
+[BCMT-18.06-4 root@clcmos:~/CSF-BCMT]$ ncm appv1 load --app_path [path_to_nokia_nss_tgz]
 
-Alarm
---per site
 
 
-kibana
---index searching and showing data 
---Create new dashboard to show msu and threatids 
---dashboard counts are combined?
---all viz should be verified
 
-SNMP collector
---
-no issue msu/s
+Followings are the steps to start and stop the simulator
 
-1)default geo --> false in GUI
-2)enable in GUI > sync to remote from installation
-3)GUI has new tab for remote IP and port
-4)dynamicaly pickup remote ip port for sync
-5)disable 
+Run the script or simulator in one terminal :
+python2.7 generator.py
+
+with docker : 
+docker run -i -p 5000:5000  -t 189f65b1b5e7 /bin/bash
+
+from another terminal send post request.
+replace collector IP by kubectl get svc -n analytics | grep "4739/TCP" 
+Start : 
+curl -X POST http://10.15.163.123:5000/testcase/0 -H "Content-Type: application/json" -d '{ "address":"<collector IP>", "protocol": "tcp" , "jobs" : 16 , "rate": 1000,  "rep": 0}'
+
+STOP : 
+curl -X POST http://10.15.163.123:5000/stop -H "Content-Type: application/json"
+
+NOTE : generator_cli.py script is there to run without rest server. In that we have pass the same set of argument in command line only .
+Simulator is present : IP : 10.15.163.123 (root/crvmtemplate)
+PATH : /root/new_repo/SS7/docker/ipfix_generator/scripts
+Docker file for dependency : /root/new_repo/SS7/docker/_base_images/ipfix_generator
+
+
+-------------------------
+SNMP
+-------------------------
+#to find the mib location
+net-snmp-config --default-mibdirs
+
+#opmanager tool web server port 8060
+
+-------configuration---------
+#create user
+net-snmp-create-v3-user -ro -A test_auth_pass -X test_enrypt_pass -a MD5 -x DES test_username1
+net-snmp-create-v3-user -ro -A secretmdkey -X secretdeskey -a MD5  -x DES informuser
+#open config file and add authpriv .1 
+vim /etc/snmp/snmpd.conf
+rouser test_username1   authpriv .1
+systemctl restart snmpd
+-----------test_username1:test_auth_pass:test_enrypt_pass   10.93.135.65
+-----test------
+snmptrap -c public -v 2c 10.93.135.73 "" 1.3.6.1.2.1.43.18.2.0.1
+snmpinform -v 3 -u test_username1 -a MD5 -A test_auth_pass -x DES -X test_enrypt_pass -l authPriv 10.93.135.73 1 0
+
+snmptrap -c public -v 2c 10.142.214.59 "" .1.3.6.1.6.3.1.1.5.1
+
+snmptrap -c public -v 2c 10.143.9.243 "" .1.3.6.1.6.3.1.1.5.1
+snmptrap -v 3 -u test_username1 -a MD5 -A test_auth_pass -x DES -X test_enrypt_pass -l authPriv 10.143.9.243 1 0
+
+
+snmptrap -v 3 -u test_username1 -a MD5 -A test_auth_pass -x DES -X test_enrypt_pass -l authPriv 10.93.135.73 1 0
+
+
+snmpinform -v 3 -u test_username1 -a MD5 -A test_auth_pass -l authNoPriv 10.93.135.73 42 coldStart
+
+
+#working snmpv3 trap config
+sender vlab ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.65
+10.93.135.73 receiver windows box windows1/yt_xk39b
+
+#first confirm connectivity(both ways) between sender <<-connection->>receiver
+
+Install manageEngine Mib browser free tool on receiver machine
+https://www.manageengine.com/products/mibbrowser-free-tool/
+
+Sender side install snmp command line tools
+yum -y install net-snmp net-snmp-utils
+https://www.liquidweb.com/kb/how-to-install-and-configure-snmp-on-centos/
+
+#create user
+net-snmp-create-v3-user -ro -A test_auth_pass -X test_enrypt_pass -a MD5 -x DES test_username1
+
+/etc/snmp/snmpd.conf
+rouser test_username1 authpriv .1
+rocommunity  public
+rwcommunity  public
+authuser log,execute,net test_username1
+ignoreauthfailure  no
+ignoreauthfailure  no
+authcommunity log,execute,net public
+authuser log,execute,net test_username1
+
+/etc/snmp/snmptrapd.conf
+authCommunity   log,execute,net public
+
+systemctl restart snmpd
+
+#mib trapviewer config
+uncheck Authenticate v1/v2c traps(community) **
+uncheck Authenticate v3 traps **
+port:162
+Community:public
+trap list:162:public
+
+-->start the trap viewer
+-->send traps from sender machine
+snmptrap -v 3 -c public -u test_username1 -a MD5 -A test_auth_pass -l authNoPriv -x DES -X test_enrypt_pass 10.93.135.73 "" .1.3.6.1.6.3.1.1.5.1
+-->Trap will appear in trap viewer
+
+
+#references
+https://sourceforge.net/p/net-snmp/mailman/message/17304477/
+http://net-snmp.sourceforge.net/wiki/index.php/TUT:Configuring_snmptrapd_to_receive_SNMPv3_notifications
+http://net-snmp.sourceforge.net/wiki/index.php/TUT:Configuring_snmptrapd
+
+
+OS alarm clear trap 
+load number calculation?
+grep 'cpu ' /proc/stat | awk '{usage=100-($5*100)/($2+$3+$4+$5+$6+$7+$8)} END {print usage}'
+additional text different for each event (map<Event name, description>)
+brevity control(supress same )
+sevierity event level is required
+
+
+
+http://net-snmp.sourceforge.net/wiki/index.php/TUT:Configuring_snmptrapd_to_receive_SNMPv3_notifications
+# community name should be same in snmpd and snmptrapd
+snmp v2 trap final config 
+snmpd.conf
+trapcommunity public
+trap2sink      10.93.135.101:162    #destination:snmpreceiverport
+
+snmptrapd.conf
+authCommunity   log,execute,net public
+
+snmp v2 inform final config 
+snmpd.conf
+
+trapcommunity public
+informsink     10.93.135.101:162
+
+snmptrapd.conf
+authCommunity   log,execute,net public
+
+
+snmp v3 inform final config
+snmpd.conf
+trapsess -r 0 -v 3 -Ci -n "" -u informuser -l authPriv -a MD5 -A secretmdkey -x DES -X secretdeskey 10.93.135.101:162
+iquerySecName nsagent
+rouser nsagent
+
+snmptrapd.conf
+createUser informuser MD5 secretmdkey DES secretdeskey
+authUser log,execute,net informuser authPriv
+
+
+snmp v3 trap final config
+snmpd.conf
+trapsess -r 0 -v 3 -e 0x8000000001020304 -n "" -u informuser -l authPriv -a MD5 -A secretmdkey -x DES -X secretdeskey 10.93.135.101:162
+iquerySecName nsagent
+rouser nsagent
+
+snmptrapd.conf
+createUser -e 0x8000000001020304 informuser MD5 secretmdkey DES secretdeskey
+authUser log,execute,net informuser authPriv
+
+
+-------rsyslog 10.93.135.85
+
+
+#ticket nodenotready csf-12108
+curl http://172.17.235.219:10255/healthz
+kubectl get nodes
+sudo systemctl restart kubelet.service
+sudo systemctl status kubelet.service
+ps -aux | grep "kube"
+[systemctl restart kube-apiserver
+systemctl restart kube-controller-manager
+systemctl restart kube-scheduler]
+[
+systemctl stop kubelet
+systemctl stop docker
+iptables --flush
+iptables -tnat --flush
+systemctl start kubelet
+systemctl start docker
+]
+
+kubectl get pods --all-namespaces
+ncm cluster status
+#kublet service not coming up
+cat /proc/sys/fs/inotify/max_user_watches # default is 8192 $ sudo sysctl fs.inotify.max_user_watches=1048576 # increase to 1048576
+
+Audit rules are failing during post-config run. Rules are failed because of docker container path rules are present in secpam-privileged.rules file , example of such rule is 
+“-a always,exit -F path=/data0/docker/overlay2/f2ae166561426ee692e14de27427103978c5a03e583ae834e5a636b88ea82e4b/merged/usr/bin/chfn -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged”
+
+Like above there are many rules present. As we suspected these rules are created from BCMT and they confirmed as they are not creating those rules.
+CSF Ticket: https://greenhopper.app.alcatel-lucent.com/browse/CSFS-13656
+
+Please help us to understand and fix the audit rules failures. 
+1)	Who and when the audit rules are created?
+2)	Is there any separate code base to apply the audit rules?
+
+
+----add rules-----
+iptables -I INPUT 1 -p tcp --dport 9200 -j DROP && iptables -I FORWARD 1 -p tcp --dport 9200 -j DROP && iptables -I OUTPUT 1 -p tcp --dport 9200 -j DROP
+
+iptables -I INPUT -p tcp --dport 9300 -j DROP && iptables -I FORWARD -p tcp --dport 9300 -j DROP && iptables -I OUTPUT -p tcp --dport 9300 -j DROP
+
+------delete rules-----
+iptables -D INPUT -p tcp --dport 9200 -j DROP && iptables -D FORWARD -p tcp --dport 9200 -j DROP && iptables -D OUTPUT -p tcp --dport 9200 -j DROP
+
+iptables -D INPUT -p tcp --dport 9300 -j DROP && iptables -D FORWARD -p tcp --dport 9300 -j DROP && iptables -D OUTPUT -p tcp --dport 9300 -j DROP

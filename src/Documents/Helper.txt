@@ -38,19 +38,19 @@ Go to the nss repo path
 ./gradlew projects
 --------------------------
 ./gradlew :administration_services:build -x check failed build
-./gradlew :alarm_handler:build -x check --pass
-./gradlew :elastic_sync:build -x check --pass
-./gradlew :house_keeper:build -x check --pass
-./gradlew :ipfix_keeper:build -x check --pass
+./gradlew :alarm_handler:build -x check --pass tfail-6
+./gradlew :elastic_sync:build -x check --pass tfail-28
+./gradlew :house_keeper:build -x check --pass tfail-8
+./gradlew :ipfix_keeper:build -x check --pass tfail-7
 ./gradlew :nginx:build -x check --failed build
-./gradlew :nss_common:nss_amqp:build -x check --pass
-./gradlew :nss_common:nss_elastic:build -x check --pass
+./gradlew :nss_common:nss_amqp:build -x check --pass 
+./gradlew :nss_common:nss_elastic:build -x check --pass tfail-1
 ./gradlew :nss_common:nss_event:build -x check --pass
 ./gradlew :nss_common:nss_utils:build -x check --pass
-./gradlew :rule_hit_detector:build -x check --passed
+./gradlew :rule_hit_detector:build -x check --passed tfail-5
 ./gradlew :snmp_collector:build -x check --pass
-./gradlew :snmp_keeper:build -x check --pass
-./gradlew :threat_exporter:build -x check --pass
+./gradlew :snmp_keeper:build -x check --pass tfail-6
+./gradlew :threat_exporter:build -x check --pass tfail-24
 
 #build CPP code
 docker run -it --user root -v `pwd`:/home/work --rm sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/test/cpp_dev_env bash
@@ -67,6 +67,19 @@ mkdir build
 cmake3 .. -DCMAKE_BUILD_TYPE=Release
 cmake3 --build . --target nss_threat_detector -- -j4
 cmake3 --build . --target nss_ipfix_collector -- -j4
+
+build kibana images
+--------------------
+
+
+./run.sh --npm-registry http://registry.npmjs.org/ --proxy-addr http://10.158.100.1:8080 --no-proxy 10.15.163.122 --image-name nss-kibana-rpmbuilder:latest --build-branch v5.6.15-nss
+
+npm config set proxy http://10.158.100.1:8080
+npm config set https-proxy http://10.158.100.1:8080
+npm config set registry http://registry.npmjs.org/
+yarn config set proxy http://10.158.100.1:8080
+yarn config set https-proxy http://10.158.100.1:8080
+yarn config set registry http://registry.npmjs.org/
 --------------------------------------------------
 #integration test
 --------------------------------------------------
@@ -87,11 +100,11 @@ python3.4 run_integration.py
 ./gradlew run_python -PtestFilter="ipfix-keeper"           --passed
 ./gradlew run_python -PtestFilter="rule-hit-detector"    --passed  --increased mem 
 ./gradlew run_python -PtestFilter="snmp-collector"        --passed
-./gradlew run_python -PtestFilter="house-keeper"          -- passed--increased months to 3
+./gradlew run_python -PtestFilter="house-keeper"   ^       -- passed--increased months to 3
 ./gradlew run_python -PtestFilter="consul-config"		--passed  --change helper.py sitename ie euca or sitea
-./gradlew run_python -PtestFilter="elastic-utils"	--passed(bfsync) --failed -- kibana settings --passed
+./gradlew run_python -PtestFilter="elastic-utils" f	--passed(bfsync) --failed -- kibana settings --passed
 ./gradlew run_python -PtestFilter="elastic-sync"	--passed
-./gradlew run_python -PtestFilter="index-creator"   --passed
+./gradlew run_python -PtestFilter="index-creator"  ^ --passed
 ./gradlew run_python -PtestFilter="ipfix-chain"		--passed
 ./gradlew run_python -PtestFilter="ipfix-collector-rabbit" --passed
 ./gradlew run_python -PtestFilter="keycloak-postgres-postgres_sync"  --  passed  ---tests/integration/keycloak-postgres-postgres_sync/tests/helpers helpers.py --host name updated  --test case updated ie added user 'esync'
@@ -232,7 +245,7 @@ euca ansible_connection=local ansible_user=root
 	b)verify vi /opt/bcmt/siteinfo.yml 
 7.	Execute for installation 
 	a) cd /root/SS7-Dev/deployment && cp /root/demo.sh /root/SS7-Dev/deployment
-	b) ./demo.sh load NSS-demo master build_3017     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
+	b) ./demo.sh load NSS-demo master build_3020     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
 	c) ./demo.sh install ansible_hosts
 8.	Execute for uninstallation  
 	a) cd /root/SS7-Dev/deployment

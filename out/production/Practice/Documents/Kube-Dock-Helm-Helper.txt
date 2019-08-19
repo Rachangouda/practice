@@ -4,9 +4,9 @@
 -------------------------------
 install specific version
 -------------------------------
-curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/local/bin/kubectl
-curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubeadm && chmod +x ./kubeadm && sudo mv ./kubeadm /usr/local/bin/kubeadm
-curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubelet && chmod +x ./kubelet && sudo mv ./kubelet /usr/local/bin/kubelet
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.13.4/bin/linux/amd64/kubectl && chmod +x ./kubectl && sudo mv ./kubectl /usr/bin/kubectl
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.13.4/bin/linux/amd64/kubeadm && chmod +x ./kubeadm && sudo mv ./kubeadm /usr/bin/kubeadm
+curl -LO curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.13.4/bin/linux/amd64/kubelet && chmod +x ./kubelet && sudo mv ./kubelet /usr/bin/kubelet
 curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.28.2/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 ------------------------------------------------------------------------
 minikube start/status/stop
@@ -31,6 +31,7 @@ kubectl get configmaps -n analytics
 kubectl get configmaps ingress-controller-leader-ipfix-0-nginx -o yaml
 #edit config then pod will be recreated
 kubectl edit configmaps ingress-controller-leader-ipfix-0-nginx -o yaml -n analytics
+#/etc/ngnix/nginx.conf where value will be present for template
 
 #to save config of full system
 kubectl get configmaps -o yaml -n analytics
@@ -52,6 +53,9 @@ kubectl describe services my-service
 kubectl delete services my-service
 kubectl delete deployment hello-world
 
+#forcefully delete pod 
+kubectl delete pods <pod> --grace-period=20 --force
+
 #get the IP address and port for the Service
 minikube service <servicename> --url
 
@@ -59,7 +63,8 @@ minikube service <servicename> --url
 kubectl get events --namespace=my-namespace
 kubectl describe node  <node-name>
 kubectl get node <node-name> -o yaml
-
+#see node selector label
+kubectl get nodes --show-labels
 #list all containers in kubernetes
 kubectl get pods --all-namespaces -o jsonpath="{..image}" |\
 tr -s '[[:space:]]' '\n' |\
@@ -72,6 +77,18 @@ kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata
 #List Containers filtering by Pod label
 kubectl get pods --all-namespaces -o=jsonpath="{..image}" -l app=nginx
 
+# pods are crashing 
+#list etcd members 
+etcdctl member list
+etcdctl member remove fbdf406b970cb7fc if error in  journalctl -u etcd >> (ID mismatch got 7273776352ec5cc8 want b71a048acf578b73) like
+etcdctl member add grey-manager-1 https://10.75.86.67:2380
+#On failed node, remove etcd member data
+cd /data0/etcd 
+mv member/ bk.member
+modify /etc/systemd/system/etcd.service, change " --initial-cluster-state new \ " to " --initial-cluster-state existing\ "
+systemctl daemon-reload;systemctl restart etcd
+#Check etcdc cluster health
+etcdctl member list
 ---------------------------------------------------
 check status of pods
 ----------------------------------------------------
@@ -84,6 +101,9 @@ To see the output of our application, run a curl request.
 
 curl http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/proxy/
 kubectl exec $POD_NAME env
+
+#find the ports 
+kubectl get svc --all-namespaces -o go-template='{{range .items}}{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{.}}{{"\n"}}{{end}}{{end}}{{end}}'
 
 -----------------------
 workaround for IP address not able to allocate not in range
@@ -126,8 +146,24 @@ docker inspect mycontainer
 
 #tag
 docker tag elastic_sync:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_sync:build_3003
-docker tag rule_hit_detector:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/rule_hit_detector:build_3003
+docker tag snmp_keeper:latest bcmt-registry:5000/master/snmp_keeper:build_3007
+
+docker tag house_keeper:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3009
+docker tag elasticsearch:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elasticsearch:build_3009
+docker tag elastic_utils:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_utils:build_3009
+docker tag fluentd:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3009
+docker tag kibana:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/kibana:build_3009
 ----------------
+#manual pull images
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3020
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3020
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/alma_config:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/administration_services:build_3017
+sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/keycloak:build_3017
+
 # find ID of your running container:
 docker ps
 # create image (snapshot) from container filesystem
@@ -139,8 +175,15 @@ docker run -t -i mysnapshot /bin/bash
 docker rmi mysnapshot
 #delete all images
 docker rmi -f $(docker images -a -q)
-#remove/delete by pattern column start with index 0
-docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi
+docker system prune -a -f
+docker rmi -f $(docker images | grep "build_3017" | awk '{print $3}')
+#remove/delete by pattern column start with index 0 forcefully
+docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi -f
+docker container ls -a
+docker container rm cc3f2ff51cab cd20b396a061
+#https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/
+#To remove all stopped containers use the docker container prune command:
+docker container prune
 
 #delete all helms
 helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del ; helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del –purge
@@ -151,8 +194,25 @@ helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del ; helm ls --a
   docker run -it imagename
   docker run -p 80:80 imagename   ---<port for machine : port for container   >
 
+#check docker state
+docker inspect -f '{{.State.Running}}' $container_name
+-----------------------------------
+proxy settings
+-------------------
+cat <<EOF > /etc/systemd/system/docker.service.d/http-proxy.conf[Service]
+Environment="HTTP_PROXY=http://inban1b-proxy.apac.nsn-net.net:8080"
+Environment="HTTPS_PROXY=http://inban1b-proxy.apac.nsn-net.net:8080"
+EOF
+which proxy do you use now
+try any of these,
+export http_proxy="http://inban1b-proxy.apac.nsn-net.net:8080"
+export http_proxy=http://proxy.lbs.alcatel-lucent.com:8000/
+export https_proxy=https://proxy.lbs.alcatel-lucent.com:8000/
+export http_proxy=http://inmum1a-proxy.apac.nsn-net.net:8080/
+export HTTPS_PROXY=87.254.212.120:8080/
 
-
+systemctl daemon-reload
+systemctl restart docker
 =======================================================================================================================================================
 Helm Helpers
 =======================================================================================================================================================
@@ -176,13 +236,16 @@ helm install snmp-generator \
 	--values /root/nss-repo/deployment/k8s/generators/snmp-generator/data/snmp_values.yaml
 
 
+helm install --name elastic-utils /etc/nss/configuration/nss-current/charts/elastic-utils --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/overrides.yaml
 
+#/etc/nss/configuration/nss-current/charts/kibana/screts/kibana.yml
+#requestTimeout: 120000
+helm delete --purge kibana;
+helm install --name kibana /etc/nss/configuration/nss-current/charts/kibana --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/overrides.yaml
 
-
-
-
-
-
+citm-ingress
+helm delete --purge citm-ingress
+helm install --name citm-ingress /etc/nss/configuration/nss-current/charts/citm-ingress --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/overrides.yaml
 
 
 
