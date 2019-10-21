@@ -9,6 +9,10 @@ Username: rachan.gouda@nokia.com/Naga@123
 3uk openvpn login
 j.abhijith/
 
+administrator/Signalization1.
+https://10.75.86.35/#/analytics grey
+auditor/signalization1./signal1.
+
 Ports: login
 ----------------------------
 consule:30500
@@ -16,7 +20,11 @@ app:30000
 elastic db:9200
 keycloak web gui:30543  admin/ss7admin
 kibana:https://10.15.163.122:30601 admin/admin
+keycloak: https://10.15.163.122:30543/auth/admin ,https://10.15.163.122:30543/auth/realms/NSS/
+#keycloak token check
+curl -k --cert ./elastic-sync.all.pem --key ./elastic-sync.all.pem -d "client_id=elastic_sync" -d "username=esync" -d "password=6eo_Red." -d "grant_type=password" -d "client_secret=5948c999-c3c6-44aa-8529-2d6886c53cfe" "https://10.15.163.122:443/auth/realms/NSS_ESYNC/protocol/openid-connect/token"
 ----------------------
+https://keycloak-https.analytics.svc.cluster.local:8543/auth/realms/NSS_ESYNC/protocol/openid-connect/token"
 
 docker registry login: 
 dockerRegistryAddress="nss-docker-releases.repo.lab.pl.alcatel-lucent.com"
@@ -36,21 +44,21 @@ Building code
 Go to the nss repo path 
 ---------------------------
 ./gradlew projects
---------------------------
-./gradlew :administration_services:build -x check failed build
-./gradlew :alarm_handler:build -x check --pass tfail-6
-./gradlew :elastic_sync:build -x check --pass tfail-28
-./gradlew :house_keeper:build -x check --pass tfail-8
-./gradlew :ipfix_keeper:build -x check --pass tfail-7
-./gradlew :nginx:build -x check --failed build
-./gradlew :nss_common:nss_amqp:build -x check --pass 
-./gradlew :nss_common:nss_elastic:build -x check --pass tfail-1
-./gradlew :nss_common:nss_event:build -x check --pass
-./gradlew :nss_common:nss_utils:build -x check --pass
-./gradlew :rule_hit_detector:build -x check --passed tfail-5
-./gradlew :snmp_collector:build -x check --pass
-./gradlew :snmp_keeper:build -x check --pass tfail-6
-./gradlew :threat_exporter:build -x check --pass tfail-24
+---------------------------
+./gradlew :administration_services:build --console=verbose -x check failed build
+./gradlew :alarm_handler:build --console=verbose -x check  --pass tfail-6
+./gradlew :elastic_sync:build --console=verbose -x check --pass tfail-28
+./gradlew :house_keeper:build --console=verbose -x check --pass tfail-8
+./gradlew :ipfix_keeper:build --console=verbose -x check --pass tfail-7
+./gradlew :nginx:build --console=verbose -x check --failed build
+./gradlew :nss_common:nss_amqp:build --console=verbose -x check --pass 
+./gradlew :nss_common:nss_elastic:build --console=verbose -x check --pass tfail-1
+./gradlew :nss_common:nss_event:build --console=verbose -x check --pass
+./gradlew :nss_common:nss_utils:build --console=verbose -x check --pass
+./gradlew :rule_hit_detector:build --console=verbose -x check --passed tfail-5
+./gradlew :snmp_collector:build --console=verbose -x check --pass
+./gradlew :snmp_keeper:build --console=verbose -x check --pass tfail-6
+./gradlew :threat_exporter:build --console=verbose -x check --pass tfail-24
 
 #build CPP code
 docker run -it --user root -v `pwd`:/home/work --rm sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/test/cpp_dev_env bash
@@ -89,7 +97,7 @@ sudo python3 setup.py install --force
 pip3 install requests==2.11.1
 increase time stop_max_delay=240000 in AlarmHandlerTestBase in sendevent()
 
-cd /root/nss_repo
+cd /root/SS7-Dev
 ./gradlew integ_cleanup
 ./gradlew integ_setup
 cd tests/integration/alarm-handler
@@ -101,7 +109,7 @@ python3.4 run_integration.py
 ./gradlew run_python -PtestFilter="rule-hit-detector"    --passed  --increased mem 
 ./gradlew run_python -PtestFilter="snmp-collector"        --passed
 ./gradlew run_python -PtestFilter="house-keeper"   ^       -- passed--increased months to 3
-./gradlew run_python -PtestFilter="consul-config"		--passed  --change helper.py sitename ie euca or sitea
+./gradlew run_python -PtestFilter="consul-config"		--passed  --change helper.py ->get_hostname() sitename ie euca or sitea CheckIfConfigIsSavedInConsul()-> minikube_user = 'euca'
 ./gradlew run_python -PtestFilter="elastic-utils" f	--passed(bfsync) --failed -- kibana settings --passed
 ./gradlew run_python -PtestFilter="elastic-sync"	--passed
 ./gradlew run_python -PtestFilter="index-creator"  ^ --passed
@@ -208,19 +216,18 @@ sysctl -w vm.max_map_count=262144
 -----------------------------------------
 kubeadm reset
 swapoff -a
-echo 1 > /proc/sys/vm/drop_caches
-echo 2 > /proc/sys/vm/drop_caches
-echo 3 > /proc/sys/vm/drop_caches
+sync;echo 1 > /proc/sys/vm/drop_caches
+sync;echo 2 > /proc/sys/vm/drop_caches
+sync;echo 3 > /proc/sys/vm/drop_caches
 echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
 /bin/systemctl stop firewalld
-sudo service iptables stop
+#sudo service iptables stop
   
 kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.13.4
 echo y|sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
 kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
-kubectl taint nodes --all node-role.kubernetes.io/master-
 
 1.	Login as root user
 2.	Clone the SS7-Dev code in /root/ path
@@ -245,13 +252,21 @@ euca ansible_connection=local ansible_user=root
 	b)verify vi /opt/bcmt/siteinfo.yml 
 7.	Execute for installation 
 	a) cd /root/SS7-Dev/deployment && cp /root/demo.sh /root/SS7-Dev/deployment
-	b) ./demo.sh load NSS-demo master build_3020     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
+	b) ./demo.sh load NSS-demo master build_3026     cp /root/bootstrap.yml /tmp/current-install/files/charts/elastic-sync/config-files/
 	c) ./demo.sh install ansible_hosts
 8.	Execute for uninstallation  
 	a) cd /root/SS7-Dev/deployment
 	b) ./demo.sh uninstall ansible_hosts
 	c) ./demo.sh unload
 
+	------------------------
+	#install server
+	docker exec -it dm_admin bash
+	ncm appv1 list
+	ncm appv1 install --app_name nokia_nss --app_version 3029
+	#all nodes 
+	tail -f /opt/bcmt/log/ansible.log
+	------------------------------
 http://<your ip>:7447/nginx-console/status.html
 http://10.15.163.122:7447/nginx-console/status.html
 -----------------------------
@@ -386,26 +401,8 @@ rpm -ql nss-tools-3.36.0-7.el7_5.x86_64
 rpm -qlp secpam-dosmon-2.4.4-1.606.x86_64.rpm
 #grep inside the rpm
 grep -r  "SNMPnormalization" $(rpm -ql nokia_nss_sms-17.5-build_37.x86_64)
-
-grep -r "audit" $(rpm -qlp secpam-dosmon-2.4.4-1.606.x86_64.rpm)
-grep -r "audit" $(rpm -ql nss-tools-3.36.0-7.el7_5.x86_64)
-grep -r "audit" $(rpm -ql openssh-clients-7.4p1-16.el7.x86_64)
-grep -r "audit" $(rpm -ql openssl-1.0.2k-12.el7.x86_64)
-grep -r "audit" $(rpm -ql openssl-libs-1.0.2k-12.el7.x86_64)
-grep -r "audit" $(rpm -ql openssh-server-7.4p1-16.el7.x86_64)
-grep -r "audit" $(rpm -ql nss-util-3.36.0-1.el7_5.x86_64)
-grep -r "audit" $(rpm -ql nss-softokn-freebl-3.36.0-5.el7_5.x86_64)
-grep -r "audit" $(rpm -ql nss-sysinit-3.36.0-7.el7_5.x86_64)
-grep -r "audit" $(rpm -ql nokia_nss_sms-17.5-build_37.x86_64)
-grep -r "audit" $(rpm -ql nokia_nss_ss7_python_deps-17.5-build_7.x86_64)
-grep -r "audit" $(rpm -ql nokia_nss_tools-17.5-build_364.x86_64)
-grep -r "audit" $(rpm -ql openssl-devel-1.0.2k-12.el7.x86_64)
-grep -r "audit" $(rpm -ql nss-softokn-3.36.0-5.el7_5.x86_64)
-grep -r "audit" $(rpm -ql nokia_nss_default_ruleset-17.5-build_86.x86_64)
-grep -r "audit" $(rpm -ql nss-pem-1.0.3-4.el7.x86_64)
-grep -r "audit" $(rpm -ql xmlsec1-openssl-1.2.20-7.el7_4.x86_64)
-grep -r "audit" $(rpm -ql openssh-7.4p1-16.el7.x86_64)
-
+#extract rpm file 
+rpm2cpio rpmfile.rpm | cpio -idmv
 
 #clear system cache/memory
 https://www.getpagespeed.com/server-setup/clear-disk-space-centos
@@ -715,15 +712,7 @@ ncm cluster status
 #kublet service not coming up
 cat /proc/sys/fs/inotify/max_user_watches # default is 8192 $ sudo sysctl fs.inotify.max_user_watches=1048576 # increase to 1048576
 
-Audit rules are failing during post-config run. Rules are failed because of docker container path rules are present in secpam-privileged.rules file , example of such rule is 
-“-a always,exit -F path=/data0/docker/overlay2/f2ae166561426ee692e14de27427103978c5a03e583ae834e5a636b88ea82e4b/merged/usr/bin/chfn -F perm=x -F auid>=1000 -F auid!=4294967295 -k privileged”
 
-Like above there are many rules present. As we suspected these rules are created from BCMT and they confirmed as they are not creating those rules.
-CSF Ticket: https://greenhopper.app.alcatel-lucent.com/browse/CSFS-13656
-
-Please help us to understand and fix the audit rules failures. 
-1)	Who and when the audit rules are created?
-2)	Is there any separate code base to apply the audit rules?
 
 
 ----add rules-----
@@ -735,3 +724,9 @@ iptables -I INPUT -p tcp --dport 9300 -j DROP && iptables -I FORWARD -p tcp --dp
 iptables -D INPUT -p tcp --dport 9200 -j DROP && iptables -D FORWARD -p tcp --dport 9200 -j DROP && iptables -D OUTPUT -p tcp --dport 9200 -j DROP
 
 iptables -D INPUT -p tcp --dport 9300 -j DROP && iptables -D FORWARD -p tcp --dport 9300 -j DROP && iptables -D OUTPUT -p tcp --dport 9300 -j DROP
+------------------
+-- template_ipfix_msg.json contains all fields required to create index
+----------------------------------------
+file will be generated in below path by dockerBuilder.sh script when building elastic_utils for logic refer tools/scripts/ipfix_type_mapper/ipfix_to_mapping.py
+docker/elastic_utils/files/config/generated-templates/template_ipfix_msg.json
+

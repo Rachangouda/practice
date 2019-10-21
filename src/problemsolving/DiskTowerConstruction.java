@@ -30,61 +30,56 @@ class DiskTowerConstruction {
     }
 
     static ArrayList<Integer>[] Solve(int[] arr) {
-        int totaldays= arr.length;
+
+        int totaldays=arr.length;
         ArrayList<Integer>[] printorder = new ArrayList[totaldays];
 
         Set<Integer> usedDisk = new HashSet<>();
-        SortedSet<Integer> unusedDisk = new TreeSet<>();
-        int previousDisk= totaldays;
 
+        int previousDisk = totaldays;
+        ArrayList<Integer> leftoverlist = new ArrayList<>();
+        for(int i=0; i< totaldays; i++){
 
-
-        for (int i = 0; i < totaldays ; i++) {
             ArrayList<Integer> ithdaylist = new ArrayList<>();
-
             //int uptoithdayarr[] = new int[i+1];
-            //System.arraycopy(arr,0,uptoithdayarr,0,i+1);
+            //System.arraycopy(arr,0, uptoithdayarr,0,i+1);
 
-            //int useddisksize= usedDisk.size();
-
-            LinkedList<Integer> removelist = new LinkedList<>();
-            LinkedList<Integer> addlist = new LinkedList<>();
-
-            unusedDisk.add(arr[i]);
-            for (Integer ele :
-                    removelist) {
-                unusedDisk.remove(ele);
+            int [] intmarr = new int[leftoverlist.size() +1];
+            int j=0;
+            for (Integer ele:leftoverlist) {
+                intmarr[j++]=ele;
             }
-            for (Integer ele :
-                    addlist) {
-                unusedDisk.add(ele);
-            }
+            leftoverlist.clear();
+            intmarr[j] = arr[i];
+            Arrays.parallelSort(intmarr);
 
+            for(int ithday=intmarr.length-1; ithday>=0; ithday--){
 
-            Iterator<Integer> descitr = ((TreeSet<Integer>) unusedDisk).descendingIterator();
-            while (descitr.hasNext()) {
+                int ithdaydisk = intmarr[ithday];
 
-                int ithdaydisk = descitr.next();
+                /*if(usedDisk.contains(ithdaydisk)){
 
-                if(ithdaydisk == previousDisk){
-                    usedDisk.add(ithdaydisk);
-                    previousDisk--;
-                    ithdaylist.add(ithdaydisk);
-                    removelist.add(ithdaydisk);
-                }
-                /*if(usedDisk.contains(ithdaydisk)) {
                     continue;
                 }*/
-                else
-                {
-                    addlist.add(ithdaydisk);
+
+                if(ithdaydisk == previousDisk){
+                    //usedDisk.add(ithdaydisk);
+                    previousDisk--;
+                    ithdaylist.add(ithdaydisk);
                 }
+                else{
+                    leftoverlist.add(ithdaydisk);
+                }
+
             }
 
             printorder[i] = ithdaylist;
         }
+
         return printorder;
     }
+
+
 }
 
 /*

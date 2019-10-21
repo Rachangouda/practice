@@ -2,10 +2,9 @@ cd /etc/nss/configuration/nss-current/passwords_and_certificates/certs
 
 REST API Format : http://host:port/[index]/[type]/[_action/id]
  --connect to eleastic db in VM
-curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/.kibana/_search?pretty=true'
 
 --list all indices 
-curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/_cat/indices?pretty=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.10.10.3:9200/_cat/indices?pretty=true'
 --#v? means verbose output
 curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/_cat/indices?v'
 health status index                                  uuid                   pri rep docs.count docs.deletedeleted store.size pri.store.size
@@ -13,7 +12,28 @@ green  open   ipfix_base-default-2018.11.12          IH9ns55FQZqGYi4-OdSyMQ   1 
 green  open   ipfix_matched_rules-default-2018.11.12 0liD7ukiS1mnNA6jvl38DA   1   0       9831            0      7.3mb          7.3mb
 
 --show the table meta data
-curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/ipfix_base-default-2018.11.13?pretty=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.10.10.3:9200/ipfix_base-yellow-2019.09.22?pretty=true'
+--list templates 
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.10.10.3:9200/_cat/templates?v'
+--see template configuration
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X GET 'https://10.10.10.3:9200/_template/ipfix_msg?pretty=true'
+
+-- don't run this template will be overwritten
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X PUT "https://10.10.10.3:9200/_template/ipfix_msg" -H 'Content-Type: application/json' -d '{"template":"ipfix_msg*","mappings":{"threats":{"properties":{"flowDirection":{"type": "keyword"}}}}}'
+
+--run below to by changing template file  
+export templateContent=$(cat /root/template.json)
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X PUT "https://10.10.10.3:9200/_template/ipfix_msg" -H 'Content-Type: application/json' -d "$templateContent"
+
+--update template
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X GET 'https://10.10.10.3:9200/_template/ipfix_msg?pretty=true'
+
+--delete index 
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X DELETE 'https://10.10.10.3:9200/ipfix_base-yellow-2019.09.23?pretty=true'
+
+--create index which uses stored template in _template
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X PUT 'https://10.10.10.3:9200/ipfix_matched_rules-yellow-2019.09.23?pretty=true'
+
 
 --list all records in indices
 curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem 'https://10.0.2.15:9200/ipfix_matched_rules-default-2018.11.12/threats/_search?pretty=true'
@@ -57,7 +77,7 @@ _search?pretty&filter_path=took,hits.hits._id,hits.hits._score
 
 #geo-test
 ---------------------------------------------------------------
-curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/_cat/indices?pretty=true'
+curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.10.10.2:9200/_cat/indices?pretty=true'
 
 #see content
 curl -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XGET 'https://10.15.163.122:9200/ipfix_base-euca-2019.03.04/_search?pretty=true'
@@ -94,10 +114,16 @@ curl -k --cert truststore.jks --key alarm-handler-keystore.jks -H "Content-Type:
 #working
 cd /etc/nss/configuration/nss-current/passwords_and_certificates/certs
 
-curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://10.15.163.122:9200/ipfix_base-euca-2019.01.11/threats/2" -H 'Content-Type: application/json' -d '{"accessList": "defaultRuleSetOverlay.aclOverlayHplmnOriginating_123", "accessListMode": "deny", "accessStatement": 50, "mode": "enforcing", "observationTimeMilliseconds": 1553675429000}'
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://10.15.163.122:9200/ipfix_base-euca-2019.09.28/threats/1" -H 'Content-Type: application/json' -d '{"accessList": "defaultRuleSetOverlay.aclOverlayHplmnOriginating_123", "accessListMode": "deny", "accessStatement": 50, "mode": "enforcing", "observationTimeMilliseconds": 1569672617000}'
 
 curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -XPOST "https://10.15.163.122:9200/ipfix_matched_rules-euca-2019.03.27/threats/1" -H 'Content-Type: application/json' -d '{"accessList": "defaultRuleSetOverlay.aclOverlayHplmnOriginating_123", "accessListMode": "deny", "accessStatement": 50, "mode": "enforcing", "observationTimeMilliseconds": 1553675429000}'
 
+
+# enable debug log for searchguard
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X PUT "https://10.15.163.122:9200/_cluster/settings" -H 'Content-Type: application/json' -d '{"transient":{"logger.com.floragunn": "debug"}}'
+
+# enable debug log for elasticsearch
+curl  -k --cert ./elasticsearch-admin.all.pem --key ./elasticsearch-admin.all.pem -X PUT "https://10.15.163.122:9200/_cluster/settings" -H 'Content-Type: application/json' -d '{"transient":{"logger.com.floragunn": "debug"}}'
 
 #alarm insert
 

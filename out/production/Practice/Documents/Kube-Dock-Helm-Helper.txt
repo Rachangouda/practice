@@ -148,21 +148,26 @@ docker inspect mycontainer
 docker tag elastic_sync:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_sync:build_3003
 docker tag snmp_keeper:latest bcmt-registry:5000/master/snmp_keeper:build_3007
 
-docker tag house_keeper:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3009
-docker tag elasticsearch:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elasticsearch:build_3009
-docker tag elastic_utils:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_utils:build_3009
+docker tag house_keeper:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3020
+docker tag elasticsearch:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elasticsearch:build_3020
+docker tag elastic_utils:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/elastic_utils:build_3020
 docker tag fluentd:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3009
 docker tag kibana:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/kibana:build_3009
 ----------------
 #manual pull images
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3020
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3020
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3017
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3017
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3017
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3022
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3020
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3022
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/alma_config:build_3017
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/administration_services:build_3017
-sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/keycloak:build_3017
+sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/keycloak:build_3022
+
+#kibana base image builder 
+go to charts/kibana folder 
+docker build --no-cache -f Dockerfile -t sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/kibana_base:18 . --build-arg https_proxy=http://10.144.1.10:8080                  --build-arg http_proxy=http://10.144.1.10:8080                  --build-arg no_proxy=10.75.159.218,192.168.0.1,localhost,127.0.0.1,*.nsn.com,*.nokia.com,*.alcatel-lucent.com,*.nsn-net.net,artifactory.devsec.eecloud.dynamic.nsn-net.net,docker.mbbsec.dev.eecloud.dynamic.nsn-net.net,lss-repo1.ih.lucent.com,repo.lab.pl.alcatel-lucent.com                  --build-arg PIP_INDEX_URL=https://repo.lab.pl.alcatel-lucent.com/api/pypi/python/simple                  --build-arg PIP_TRUSTED_HOST=repo.lab.pl.alcatel-lucent.com                  --build-arg ARTIFACTORY_ADDRESS=repo.lab.pl.alcatel-lucent.com -v /root/nss-kibana-rpmbuilder/build_artifacts:/kibana
+
 
 # find ID of your running container:
 docker ps
@@ -178,7 +183,7 @@ docker rmi -f $(docker images -a -q)
 docker system prune -a -f
 docker rmi -f $(docker images | grep "build_3017" | awk '{print $3}')
 #remove/delete by pattern column start with index 0 forcefully
-docker images -a | grep "pattern" | awk '{print $3}' | xargs docker rmi -f
+docker images -a | grep "<none>" | awk '{print $3}' | xargs docker rmi -f
 docker container ls -a
 docker container rm cc3f2ff51cab cd20b396a061
 #https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/
@@ -196,6 +201,9 @@ helm ls --all | awk '{print $1}' | grep -v "NAME" | xargs helm del ; helm ls --a
 
 #check docker state
 docker inspect -f '{{.State.Running}}' $container_name
+
+#docker image browse/see contents
+docker run --rm -it elastic_utils sh
 -----------------------------------
 proxy settings
 -------------------
@@ -210,7 +218,7 @@ export http_proxy=http://proxy.lbs.alcatel-lucent.com:8000/
 export https_proxy=https://proxy.lbs.alcatel-lucent.com:8000/
 export http_proxy=http://inmum1a-proxy.apac.nsn-net.net:8080/
 export HTTPS_PROXY=87.254.212.120:8080/
-
+10.144.1.10
 systemctl daemon-reload
 systemctl restart docker
 =======================================================================================================================================================
@@ -243,13 +251,21 @@ helm install --name elastic-utils /etc/nss/configuration/nss-current/charts/elas
 helm delete --purge kibana;
 helm install --name kibana /etc/nss/configuration/nss-current/charts/kibana --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/values.yaml --values /etc/nss/configuration/nss-current/charts/kibana/overrides.yaml
 
-citm-ingress
+citm-ingress port issue workaroud
+/etc/nss/configuration/nss-current/charts/citm-ingress/templates/ipfix-daemonset.yaml #change --healthz-port
+kubectl get ds -n analytics
+kubectl edit ds/citm-ingress-controller-ipfix-0 -n analytics
+
 helm delete --purge citm-ingress
 helm install --name citm-ingress /etc/nss/configuration/nss-current/charts/citm-ingress --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/values.yaml --values /etc/nss/configuration/nss-current/charts/citm-ingress/overrides.yaml
 
 
+helm install --name elasticsearch /etc/nss/configuration/nss-current/charts/elasticsearch --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elasticsearch/values.yaml --values /etc/nss/configuration/nss-current/charts/elasticsearch/overrides.yaml
+ https://elasticsearch-http.analytics.svc.cluster.local:9200
+ln -s -f /etc/nss/configuration/nss-master-build_3020_2019-09-09_14-29-31 /etc/nss/configuration/nss-current
 
+helm install --name sg-config /etc/nss/configuration/nss-current/charts/sg-config --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/sg-config/values.yaml --values /etc/nss/configuration/nss-current/charts/sg-config/overrides.yaml
 
+helm install --name elastic-utils /etc/nss/configuration/nss-current/charts/elastic-utils --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/overrides.yaml
 
-
-
+/sgadmin/tools/sgadmin.sh -migrate my_migrate_dir -ks /certificates/admin-keystore.jks -ts /certificates/truststore.jks  -cd /sg-config -tspass ${TRUSTSTORE_PASSWORD} -kspass ${KEYSTORE_PASSWORD} --fail-fast
