@@ -18,18 +18,7 @@ Ports: login
 consule:30500
 app:30000
 elastic db:9200
-keycloak web gui:30543  admin/ss7admin
-kibana:https://10.15.163.122:30601 admin/admin
-keycloak: https://10.15.163.122:30543/auth/admin ,https://10.15.163.122:30543/auth/realms/NSS/
-#keycloak token check
-curl -k --cert ./elastic-sync.all.pem --key ./elastic-sync.all.pem -d "client_id=elastic_sync" -d "username=esync" -d "password=6eo_Red." -d "grant_type=password" -d "client_secret=5948c999-c3c6-44aa-8529-2d6886c53cfe" "https://10.15.163.122:443/auth/realms/NSS_ESYNC/protocol/openid-connect/token"
-----------------------
-https://keycloak-https.analytics.svc.cluster.local:8543/auth/realms/NSS_ESYNC/protocol/openid-connect/token"
 
-docker registry login: 
-dockerRegistryAddress="nss-docker-releases.repo.lab.pl.alcatel-lucent.com"
-registryLogin=sigreg
-registryPass=Signa11
 
 Service Desk Phone Number India - 912233056834
 #My components
@@ -79,7 +68,6 @@ cmake3 --build . --target nss_ipfix_collector -- -j4
 build kibana images
 --------------------
 
-
 ./run.sh --npm-registry http://registry.npmjs.org/ --proxy-addr http://10.158.100.1:8080 --no-proxy 10.15.163.122 --image-name nss-kibana-rpmbuilder:latest --build-branch v5.6.15-nss
 
 npm config set proxy http://10.158.100.1:8080
@@ -110,7 +98,7 @@ python3.4 run_integration.py
 ./gradlew run_python -PtestFilter="snmp-collector"        --passed
 ./gradlew run_python -PtestFilter="house-keeper"   ^       -- passed--increased months to 3
 ./gradlew run_python -PtestFilter="consul-config"		--passed  --change helper.py ->get_hostname() sitename ie euca or sitea CheckIfConfigIsSavedInConsul()-> minikube_user = 'euca'
-./gradlew run_python -PtestFilter="elastic-utils" f	--passed(bfsync) --failed -- kibana settings --passed
+./gradlew run_python -PtestFilter="elastic-utils" 	--passed
 ./gradlew run_python -PtestFilter="elastic-sync"	--passed
 ./gradlew run_python -PtestFilter="index-creator"  ^ --passed
 ./gradlew run_python -PtestFilter="ipfix-chain"		--passed
@@ -124,31 +112,9 @@ python3.4 run_integration.py
 ./gradlew run_python -PtestFilter="threat-exporter"  --passed
 
 
-
-#run with one cmd
-./gradlew run_integ_tests -PtestFilter="alarm-handler"
-./gradlew run_integ_tests -PtestFilter="house-keeper"
---------------------------------------------------
-#snmp-collector hostname chages to connect to local snmp generator & Running in docker
-/root/nss-repo/snmp_collector/src/main/resources/bootstrap.yml
--->rabbit:ip: rabbitmq.analytics.svc.cluster.local
-
-
-#make sure your network allow TCP traffic in and out, then you could get back your public facing IP with the following command
-curl ifconfig.co
-#check internet working
-wget http://www.google.com
-
 Dev setup versions
 VM ISO used:
 minikube iso version: http://artifactory.devsec.eecloud.dynamic.nsn-net.net:8081/artifactory/sg_repo/kubernetes/minikube/minikube-v0.24.1b-nokia.iso
-
-client binaries used:
-minikube version: v0.24.1 can be used latest or 28
-Kubernetes version for minikube VM 1.10.0
-kubectl version: v1.10.0
-helm version: v2.8.2
-docker version 17.12.1 can be used latest
 
 
 ----------------
@@ -724,9 +690,5 @@ iptables -I INPUT -p tcp --dport 9300 -j DROP && iptables -I FORWARD -p tcp --dp
 iptables -D INPUT -p tcp --dport 9200 -j DROP && iptables -D FORWARD -p tcp --dport 9200 -j DROP && iptables -D OUTPUT -p tcp --dport 9200 -j DROP
 
 iptables -D INPUT -p tcp --dport 9300 -j DROP && iptables -D FORWARD -p tcp --dport 9300 -j DROP && iptables -D OUTPUT -p tcp --dport 9300 -j DROP
-------------------
--- template_ipfix_msg.json contains all fields required to create index
-----------------------------------------
-file will be generated in below path by dockerBuilder.sh script when building elastic_utils for logic refer tools/scripts/ipfix_type_mapper/ipfix_to_mapping.py
-docker/elastic_utils/files/config/generated-templates/template_ipfix_msg.json
+
 
