@@ -22,7 +22,15 @@ public class BitWiseOperations {
 		System.out.println("result of ["+ opr1 + "^" + opr2 +" == " + textAttr);
 		int val = 128 << 1;
 		System.out.println("multiplication:" + val);
-		
+
+		System.out.println("----------bitwise and assignement-------");
+
+		for (int i = 1; i < 32; i++) {
+			int a=i, b=31;
+			int result = a & b;
+			System.out.println("Bitwise AND of "+ a + " and b " + b +" is " +result );
+		}
+
 	}
 
 }

@@ -134,6 +134,7 @@ Docker Helpers
 ----------------------------------------------------------
 Docker helper commands
 ----------------------------------------------------------
+yum install docker-1.13.1-103.git7f2769b.el7.x86_64
 --verify the docker proxy settings in ./systemd/system/docker.service.d/http-proxy.conf file
 systemctl show --property=Environment docker
 systemctl restart docker
@@ -155,11 +156,11 @@ docker tag fluentd:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com
 docker tag kibana:latest sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/kibana:build_3009
 ----------------
 #manual pull images
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3020
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3020
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3022
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3020
-docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3022
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elastic_utils:build_3026
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/nssbase/elasticsearch:build_3026
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/fluentd:build_3025
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/house_keeper:build_3025
+docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/calm:build_3025
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/alma_config:build_3017
 docker pull sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/administration_services:build_3017
 sandbox-docker-releases.repo.lab.pl.alcatel-lucent.com/master/keycloak:build_3022
@@ -261,11 +262,15 @@ helm install --name citm-ingress /etc/nss/configuration/nss-current/charts/citm-
 
 
 helm install --name elasticsearch /etc/nss/configuration/nss-current/charts/elasticsearch --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elasticsearch/values.yaml --values /etc/nss/configuration/nss-current/charts/elasticsearch/overrides.yaml
+
  https://elasticsearch-http.analytics.svc.cluster.local:9200
 ln -s -f /etc/nss/configuration/nss-master-build_3020_2019-09-09_14-29-31 /etc/nss/configuration/nss-current
 
 helm install --name sg-config /etc/nss/configuration/nss-current/charts/sg-config --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/sg-config/values.yaml --values /etc/nss/configuration/nss-current/charts/sg-config/overrides.yaml
 
-helm install --name elastic-utils /etc/nss/configuration/nss-current/charts/elastic-utils --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-utils/overrides.yaml
+helm install --name elastic-sync /etc/nss/configuration/nss-current/charts/elastic-sync --values /etc/nss/configuration/nss-current/global-values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-sync/values.yaml --values /etc/nss/configuration/nss-current/charts/elastic-sync/overrides.yaml
+
+
+ helm install --name postgres /etc/nss/configuration/nss-master-build_3030_2019-10-12_13-15-42/charts/postgres --values /etc/nss/configuration/nss-master-build_3030_2019-10-12_13-15-42/global-values.yaml --values /etc/nss/configuration/nss-master-build_3030_2019-10-12_13-15-42/charts/postgres/values.yaml --values /etc/nss/configuration/nss-master-build_3030_2019-10-12_13-15-42/charts/postgres/overrides.yaml
 
 /sgadmin/tools/sgadmin.sh -migrate my_migrate_dir -ks /certificates/admin-keystore.jks -ts /certificates/truststore.jks  -cd /sg-config -tspass ${TRUSTSTORE_PASSWORD} -kspass ${KEYSTORE_PASSWORD} --fail-fast

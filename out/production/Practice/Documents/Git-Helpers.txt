@@ -57,7 +57,7 @@ git push origin HEAD:refs/for/master
 
 ----------
 #Git commit
-git commit -m "sg-3978 Low security vulnerability has been found in the Keycloak, upgrade required"
+git commit -m "SATURN-600,SATURN-613: Alarm framework and Counter generator -phase2"
 git push origin HEAD:refs/for/master
 #first time only
  gitdir=$(git rev-parse --git-dir);
@@ -69,4 +69,13 @@ git reset HEAD^
 git commit --amend
 git push origin HEAD:refs/for/master
 -----------
-git push origin HEAD:refs/for/v5.6.12-nss
+git push origin HEAD:refs/for/v5.6.15-nss
+
+#compare with remote
+git diff origin/master:filex filex
+
+#list local commited files not yet pushed
+git log -n 1
+git diff-tree --no-commit-id --name-only -r <commit-ish>
+or
+git show --stat --oneline HEAD

@@ -10,7 +10,7 @@ public class WaterGenerator {
     static AtomicInteger hrunCount = new AtomicInteger(0);
     static AtomicInteger orunCount = new AtomicInteger(0);
 
-    public static String input = "HOHHOH";
+    public static String input = "HOHHOHHO";
     public static int oxyzenLoc = 0;
     public static int hydrogenLoc = 0;
 

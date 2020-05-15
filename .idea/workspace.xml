@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4262489-5e8b-4a4c-9c81-8f5e1a368694" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/problemsolving/DigitOrLetter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/problemsolving/DollsHiding.java" afterDir="false" />
+    <list default="true" id="b4262489-5e8b-4a4c-9c81-8f5e1a368694" name="Default Changelist" comment="Nokia challenge day 1">
+      <change afterPath="$PROJECT_DIR$/src/EffectiveJava/SetListOverloadProb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/Anargams.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/GeneralTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/JavaSystemProperties.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/SumDivisibleBy7.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GeneralTest/UDPServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/AlternateThreadRun.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/HaskelReachabilityCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/LambdaScopeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/MatrixSpiralPrint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/ProducerConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/StackUsingQueue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/problemsolving/WaysOfSumBySetOfDigits.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialization/Employee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialization/SerialDeserialUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialization/SerializationProxyPattern.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialization/SerializationProxyPatternTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialization/SerializationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/streams/FlatmapFilterTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Practice/Documents/Day_log_work.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Practice/Documents/Day_log_work.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Practice/Documents/Git-Helpers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Practice/Documents/Git-Helpers.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Practice/Documents/Helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Practice/Documents/Helper.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Practice/Documents/Kube-Dock-Helm-Helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Practice/Documents/Kube-Dock-Helm-Helper.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BitWiseOperations.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BitWiseOperations.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Documents/Day_log_work.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Documents/Day_log_work.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Documents/Git-Helpers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Documents/Git-Helpers.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Documents/Helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Documents/Helper.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Documents/Kube-Dock-Helm-Helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Documents/Kube-Dock-Helm-Helper.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Documents/elastic_helper.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Documents/elastic_helper.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/problemsolving/DiskTowerConstruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/problemsolving/DiskTowerConstruction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/problemsolving/H2O.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/problemsolving/H2O.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/problemsolving/WaterGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/problemsolving/WaterGenerator.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/problemsolving/DollsHiding.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/stream/Collectors.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4050">
-              <caret line="228" column="29" selection-start-line="228" selection-start-column="29" selection-end-line="228" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -64,12 +55,25 @@
       <find>predicteNoOfPeople(N)</find>
       <find>desc</find>
       <find>sort</find>
+      <find>barrier</find>
+      <find>class Node</find>
+      <find>addFirst</find>
+      <find>Hacker's Delight</find>
+      <find>interable</find>
+      <find>FasterXML</find>
+      <find>combineOpFlags</find>
+      <find>ThreadLocal</find>
+      <find>init</find>
+      <find>Lock</find>
+      <find>create</find>
+      <find>lock</find>
     </findStrings>
     <replaceStrings>
       <replace />
     </replaceStrings>
   </component>
   <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="PUSH_TAGS">
       <GitPushTagMode>
@@ -78,69 +82,13 @@
       </GitPushTagMode>
     </option>
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1114/HugeArrayDict.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1114/MainClass.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/Visitor.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/Equipment.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/PriceCalculateVisitor.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/FlopyDisk.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/EquipmentVisitor.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/Router.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/RouteVisitor.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/TPLinkRouter.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/LinkSysRouter.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/DslLinkRouter.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/LinuxRouteConfigurer.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1134/ComputeSlotLocation.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1213/Node.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1213/BSTreeTraversal.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1213/MainClass.java" />
-        <option value="$PROJECT_DIR$/src/clrs/hashtables/exercise1213/BSTreeUtility.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/Command.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/Document.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/TextDocument.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/OpenCommand.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/LightOnCommand.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/Light.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/RemoteController.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/command/Application.java" />
-        <option value="$PROJECT_DIR$/src/clrs/Node.java" />
-        <option value="$PROJECT_DIR$/src/EffectiveJava/ObjectEqualityTest.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/EnumTest.java" />
-        <option value="$PROJECT_DIR$/src/designpatterns/visitor/MainClass.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/MathTest.java" />
-        <option value="$PROJECT_DIR$/src/clrs/binarysearchtreeops/MainClass.java" />
-        <option value="$PROJECT_DIR$/src/clrs/binarysearchtreeops/RedBlackTreeUtil.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/MathTest.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/AverageProductOfNumbers.java" />
-        <option value="$PROJECT_DIR$/src/clrs/binarysearchtreeops/BSTreeUtility.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/DistinctByKey.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/SelfExpiryItems.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/DateTester.java" />
-        <option value="$PROJECT_DIR$/src/GeneralTest/UnboundedWildcardDemo.java" />
-        <option value="$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/H2O.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/WaterWithBarrier.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/WaterGenerator.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/Test.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/Chacolates.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/BananaDistribution.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/DiskTowerConstruction.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/DigitOrLetter.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/Area.java" />
-        <option value="$PROJECT_DIR$/src/problemsolving/DollsHiding.java" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="138" />
-    <option name="y" value="-27" />
-    <option name="width" value="1281" />
-    <option name="height" value="687" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="1944" />
+    <option name="height" value="1104" />
   </component>
+  <component name="ProjectId" id="1bwGJCLVtBvkAkSS1SxJLVPVz8d" />
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
@@ -156,50 +104,23 @@
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <flattenPackages ProjectPane="false" />
-      <hideEmptyPackages ProjectPane="true" />
-      <abbreviatePackageNames ProjectPane="false" />
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Practice" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Practice" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Practice" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Practice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Practice" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Practice" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="problemsolving" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="Object.java&#9;FILE&#9;jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/Object.java&#10;hashset&#9;PSI&#9;JAVA://java.util.HashSet&#10;set&#9;PSI&#9;JAVA://java.util.Set" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571644414315" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/search-guard-7.3.0-36.1.0-api/search-guard-7.3.0-36.1.0-api" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1588568339446" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../CC_SMC-master" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\GitHub\Practice\src\GeneralTest" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="clrs" />
       <recent name="clrs.hashtables" />
@@ -209,21 +130,9 @@
       <recent name="clrs.hashtables.exercise1114" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.DollsHiding">
-    <configuration name="BananaDistribution" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="problemsolving.BananaDistribution" />
+  <component name="RunManager" selected="Application.csd_path_issue">
+    <configuration name="AlternateThreadRun" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="problemsolving.AlternateThreadRun" />
       <module name="Practice" />
       <extension name="coverage">
         <pattern>
@@ -235,8 +144,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Chacolates" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="problemsolving.Chacolates" />
+    <configuration name="H2O" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="problemsolving.H2O" />
       <module name="Practice" />
       <extension name="coverage">
         <pattern>
@@ -248,8 +157,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DigitOrLetter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="problemsolving.DigitOrLetter" />
+    <configuration name="ProducerConsumer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="problemsolving.ProducerConsumer" />
       <module name="Practice" />
       <extension name="coverage">
         <pattern>
@@ -261,12 +170,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DiskTowerConstruction" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="problemsolving.DiskTowerConstruction" />
+    <configuration name="UDPClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GeneralTest.UDPClient" />
       <module name="Practice" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="problemsolving.*" />
+          <option name="PATTERN" value="GeneralTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -274,12 +183,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DollsHiding" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="problemsolving.DollsHiding" />
+    <configuration name="csd_path_issue" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GeneralTest.csd_path_issue" />
       <module name="Practice" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="problemsolving.*" />
+          <option name="PATTERN" value="GeneralTest.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -288,21 +197,24 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Chacolates" />
-      <item itemvalue="Application.BananaDistribution" />
-      <item itemvalue="Application.DiskTowerConstruction" />
-      <item itemvalue="Application.DigitOrLetter" />
-      <item itemvalue="Application.DollsHiding" />
+      <item itemvalue="Application.AlternateThreadRun" />
+      <item itemvalue="Application.H2O" />
+      <item itemvalue="Application.ProducerConsumer" />
+      <item itemvalue="Application.UDPClient" />
+      <item itemvalue="Application.csd_path_issue" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DollsHiding" />
-        <item itemvalue="Application.DigitOrLetter" />
-        <item itemvalue="Application.DiskTowerConstruction" />
-        <item itemvalue="Application.BananaDistribution" />
-        <item itemvalue="Application.Chacolates" />
+        <item itemvalue="Application.csd_path_issue" />
+        <item itemvalue="Application.UDPClient" />
+        <item itemvalue="Application.AlternateThreadRun" />
+        <item itemvalue="Application.ProducerConsumer" />
+        <item itemvalue="Application.H2O" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_INHERITED,SHOW_ANONYMOUS,SHOW_LAMBDA,VISIBILITY_SORTER,ALPHA_COMPARATOR,SHOW_FIELDS" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -343,7 +255,21 @@
       <option name="project" value="LOCAL" />
       <updated>1566222008994</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Nokia challenge day 1">
+      <created>1571644435034</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1571644435034</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Nokia challenge day 1">
+      <created>1571644460348</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1571644460348</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -355,61 +281,12 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6412078" visible="true" weight="0.2" />
-      <window_info id="Structure" order="1" sideWeight="0.3587922" side_tool="true" visible="true" weight="0.2" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3285968" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.38721138" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.053285968" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3285968" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.3285968" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.27175844" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.44049734" />
-      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24939272" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info anchor="right" id="Maven" order="8" />
-    </layout>
-  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="RECENTLY_FILTERED_USER_GROUPS">
-                <collection />
-              </option>
-              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
-                <collection />
-              </option>
-              <option name="COLUMN_ORDER">
-                <list>
-                  <option value="0" />
-                  <option value="1" />
-                  <option value="2" />
-                  <option value="3" />
-                </list>
-              </option>
-            </State>
+            <State />
           </value>
         </entry>
       </map>
@@ -428,6 +305,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -437,571 +315,319 @@
     <MESSAGE value="Nokia challenge day 1" />
     <option name="LAST_COMMIT_MESSAGE" value="Nokia challenge day 1" />
   </component>
+  <component name="WindowStateProjectService">
+    <state x="178" y="5" key="SettingsEditor" timestamp="1589535929180">
+      <screen x="73" y="0" width="1207" height="720" />
+    </state>
+    <state x="178" y="5" key="SettingsEditor/73.0.1207.720@73.0.1207.720" timestamp="1589535929180" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/hashtables/Exercise1113/MainClass.java</url>
           <line>16</line>
-          <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/hashtables/Exercise1113/MainClass.java</url>
           <line>15</line>
-          <properties />
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/hashtables/exercise1114/HugeArrayDict.java</url>
           <line>66</line>
-          <properties />
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/hashtables/exercise1114/MainClass.java</url>
           <line>12</line>
-          <properties />
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/hashtables/exercise1114/MainClass.java</url>
           <line>13</line>
-          <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/BSTreeUtility.java</url>
           <line>183</line>
-          <properties />
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/MainClass.java</url>
           <line>78</line>
-          <properties />
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/EffectiveJava/ObjectEqualityTest.java</url>
           <line>10</line>
-          <properties />
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/EffectiveJava/ObjectEqualityTest.java</url>
           <line>13</line>
-          <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/BSTreeUtility.java</url>
           <line>257</line>
-          <properties />
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/MainClass.java</url>
           <line>85</line>
-          <properties />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/MainClass.java</url>
           <line>83</line>
-          <properties />
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/problemsolving/AverageProductOfNumbers.java</url>
           <line>26</line>
-          <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/GeneralTest/DistinctByKey.java</url>
           <line>34</line>
-          <properties />
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/GeneralTest/DistinctByKey.java</url>
           <line>36</line>
-          <properties />
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/GeneralTest/DateTester.java</url>
           <line>7</line>
-          <properties />
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java</url>
           <line>42</line>
-          <properties />
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java</url>
           <line>32</line>
-          <properties />
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java</url>
           <line>47</line>
-          <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java</url>
           <line>25</line>
-          <properties />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/problemsolving/DiskTowerConstruction.java</url>
           <line>45</line>
-          <properties />
           <option name="timeStamp" value="30" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/JavaPassByValueTest.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/serialization/SerializationProxyPatternTest.java</url>
+          <line>11</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/problemsolving/StackUsingQueue.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/problemsolving/MatrixSpiralPrint.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>20</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1225</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/stream/Collectors.java</url>
+          <line>1319</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/streams/FlatmapFilterTest.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1096</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1126</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1128</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1131</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk1.8.0_231/src.zip!/java/util/HashMap.java</url>
+          <line>1141</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/Anargams.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/problemsolving/AlternateThreadRun.java</url>
+          <line>18</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/problemsolving/AlternateThreadRun.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/problemsolving/AlternateThreadRun.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/problemsolving/WaysOfSumBySetOfDigits.java</url>
+          <line>13</line>
+          <properties class="problemsolving.WaysOfSumBySetOfDigits" method="power">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/GeneralTest.java</url>
+          <line>7</line>
+          <properties class="GeneralTest.GeneralTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/problemsolving/MatrixSpiralPrint.java</url>
+          <line>28</line>
+          <properties class="problemsolving.MatrixSpiralPrint" method="printSpiral">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/GeneralTest/EnumMapTest.java</url>
+          <line>39</line>
+          <properties class="GeneralTest.EnumMapTest">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="from" />
+        <watch expression="from" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>value</expression-string>
+        <expression-string>group</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>v</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>mappingFunction.apply(key)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>Optional931_DebugLabel</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>t.to</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>m</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>matrix[uprowend][row]</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>(tail + 1) &amp; (elements.length - 1)` `</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>(tail + 1) &amp; (elements.length - 1)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/MainClass.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="84" column="21" selection-start-line="84" selection-start-column="21" selection-end-line="84" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/RedBlackTreeUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/designpatterns/command/Application.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="57" selection-start-line="8" selection-start-column="57" selection-end-line="8" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Documents/Kubernetes-commands.txt" />
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/AverageProductOfNumbers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/clrs/binarysearchtreeops/BSTreeUtility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="227" column="49" lean-forward="true" selection-start-line="227" selection-start-column="49" selection-end-line="227" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GeneralTest/EnumTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="23" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
-          <folding>
-            <element signature="e#377#378#0" expanded="true" />
-            <element signature="e#415#416#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/function/Function.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="40" column="17" selection-start-line="40" selection-start-column="17" selection-end-line="40" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/function/Predicate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../commons-collections4-4.1.jar!/org/apache/commons/collections4/map/PassiveExpiringMap.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/commons-collections4-4.1-sources.jar!/org/apache/commons/collections4/map/LRUMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="59" column="13" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ideaLibSources/commons-collections4-4.1-sources.jar!/org/apache/commons/collections4/map/PassiveExpiringMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="237" column="11" selection-start-line="237" selection-start-column="11" selection-end-line="237" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GeneralTest/SelfExpiryItems.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GeneralTest/DateTester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="20" column="73" selection-start-line="20" selection-start-column="73" selection-end-line="20" selection-end-column="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/TimeZone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9639">
-          <caret line="624" column="37" selection-start-line="624" selection-start-column="37" selection-end-line="624" selection-end-column="37" />
-          <folding>
-            <element signature="e#23369#23370#0" expanded="true" />
-            <element signature="e#23426#23427#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../joda-time-2.9.9.jar!/org/joda/time/base/AbstractInstant.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../joda-time-2.9.9.jar!/org/joda/time/Chronology.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../joda-time-2.9.9.jar!/org/joda/time/chrono/ZonedChronology.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="48" column="39" selection-start-line="48" selection-start-column="39" selection-end-line="48" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../joda-time-2.9.9.jar!/org/joda/time/chrono/AssembledChronology.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="227" column="27" selection-start-line="227" selection-start-column="27" selection-end-line="227" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../joda-time-2.9.9.jar!/org/joda/time/DateTimeZone.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/atomic/AtomicReference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="83" column="19" selection-start-line="83" selection-start-column="19" selection-end-line="83" selection-end-column="19" />
-          <folding>
-            <element signature="e#1707#1708#0" expanded="true" />
-            <element signature="e#1735#1736#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GeneralTest/DistinctByKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="44" column="35" selection-start-line="44" selection-start-column="35" selection-end-line="44" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GeneralTest/UnboundedWildcardDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9">
-          <caret line="12" column="54" lean-forward="true" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/clrs/dynamicprograming/RodCutting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-102">
-          <caret line="32" column="24" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/ArrayList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16275">
-          <caret line="691" column="41" selection-start-line="691" selection-start-column="40" selection-end-line="691" selection-end-column="41" />
-          <folding>
-            <element signature="e#6283#6284#0" expanded="true" />
-            <element signature="e#6351#6352#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/io/PrintStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19275">
-          <caret line="822" column="14" selection-start-line="822" selection-start-column="14" selection-end-line="822" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/String.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72675">
-          <caret line="2992" column="43" selection-start-line="2992" selection-start-column="40" selection-end-line="2992" selection-end-column="43" />
-          <folding>
-            <element signature="e#117893#117894#0" expanded="true" />
-            <element signature="e#117955#117956#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Objects.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4075">
-          <caret line="200" column="24" selection-start-line="200" selection-start-column="24" selection-end-line="200" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Collection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2950">
-          <caret line="143" column="17" selection-start-line="143" selection-start-column="17" selection-end-line="143" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/Math.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29575">
-          <caret line="1251" selection-start-line="1251" selection-end-line="1251" />
-          <folding>
-            <element signature="e#49082#49083#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="707" selection-start-line="707" selection-end-line="707" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/concurrent/CyclicBarrier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="349" column="59" lean-forward="true" selection-start-line="349" selection-start-column="59" selection-end-line="349" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/H2O.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="12" column="36" selection-start-line="10" selection-start-column="4" selection-end-line="12" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/WaterGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1875">
-          <caret line="75" column="37" selection-start-line="75" selection-start-column="37" selection-end-line="75" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/WaterWithBarrier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Arrays.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="166" column="23" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
-          <folding>
-            <element signature="e#5027#5028#0" expanded="true" />
-            <element signature="e#5098#5099#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/System.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="492" column="30" selection-start-line="492" selection-start-column="30" selection-end-line="492" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/SortedSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="220" column="6" selection-start-line="220" selection-start-column="6" selection-end-line="220" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/TreeSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="169" column="26" lean-forward="true" selection-start-line="169" selection-start-column="26" selection-end-line="169" selection-end-column="26" />
-          <folding>
-            <element signature="e#16558#16559#0" expanded="true" />
-            <element signature="e#16595#16596#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/math/BigInteger.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="864" column="12" selection-start-line="864" selection-start-column="12" selection-end-line="864" selection-end-column="12" />
-          <folding>
-            <element signature="e#88811#88812#0" expanded="true" />
-            <element signature="e#88870#88871#0" expanded="true" />
-            <element signature="e#89016#89017#0" expanded="true" />
-            <element signature="e#89077#89078#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Iterator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="91" column="17" selection-start-line="91" selection-start-column="17" selection-end-line="91" selection-end-column="23" />
-          <folding>
-            <element signature="e#2496#2497#0" expanded="true" />
-            <element signature="e#2561#2562#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Set.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="248" column="29" lean-forward="true" selection-start-line="248" selection-start-column="29" selection-end-line="248" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/BananaDistribution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="13" column="12" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/Collections.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="173" column="27" selection-start-line="173" selection-start-column="27" selection-end-line="173" selection-end-column="27" />
-          <folding>
-            <element signature="e#7284#7285#0" expanded="true" />
-            <element signature="e#7312#7313#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/DiskTowerConstruction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="55" column="26" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/DigitOrLetter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="27" column="69" selection-start-line="27" selection-start-column="64" selection-end-line="27" selection-end-column="69" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/Chacolates.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="800">
-          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/Area.java" />
-    <entry file="file://$PROJECT_DIR$/src/problemsolving/DollsHiding.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/util/stream/Collectors.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4050">
-          <caret line="228" column="29" selection-start-line="228" selection-start-column="29" selection-end-line="228" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

@@ -16,7 +16,7 @@ git init
 git remote add origin ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/SS7
 git clone ssh://rgouda@gerrit.ext.net.nokia.com:29418/DN/NSS/dev/nss-kibana
 git fetch origin
-git reset cd origin/master --hard
+git reset origin/master --hard
 
 #fetch origin to update with central repo
 git pull origin master
@@ -32,7 +32,14 @@ git stash
 #get latest from server
 git pull
 #merge from local saved updated version
+#remove stash and apply
 git stash pop
+#apply only dont remove 
+git stash apply
+
+#take out perticular frole from stash
+git stash show stash@{0}
+git checkout stash@{0} -- <filename>
 
 #find deleted files in repo
 git log --diff-filter=D --summary
@@ -57,7 +64,7 @@ git push origin HEAD:refs/for/master
 
 ----------
 #Git commit
-git commit -m ""
+git commit -m "SATURN-600,SATURN-613: FM/PM framework --phase-3"
 git push origin HEAD:refs/for/master
 #first time only
  gitdir=$(git rev-parse --git-dir);
@@ -70,3 +77,12 @@ git commit --amend
 git push origin HEAD:refs/for/master
 -----------
 git push origin HEAD:refs/for/v5.6.15-nss
+
+#compare with remote
+git diff origin/master:filex filex
+
+#list local commited files not yet pushed
+git log -n 1
+git diff-tree --no-commit-id --name-only -r <commit-ish>
+or
+git show --stat --oneline HEAD

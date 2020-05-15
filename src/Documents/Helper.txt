@@ -133,7 +133,7 @@ rm -rf /etc/docker
 
 install docker 17.12.1
 yum install -y container-selinux
-yum install docker-ce-17.12.1.ce
+yum install docker-ce-18.06.1.ce
 systemctl start docker && systemctl enable docker
 
 --------------------------------------------------
@@ -177,6 +177,10 @@ export NO_PROXY=$NO_PROXY,$(minikube ip),minikube
 sysctl -w vm.max_map_count=262144
 ./start_demo.sh
 
+
+
+--------
+minikube start --kubernetes-version v1.10.0
 -------------------------------------------
 #VM Demo installation steps
 -----------------------------------------
@@ -236,23 +240,10 @@ euca ansible_connection=local ansible_user=root
 http://<your ip>:7447/nginx-console/status.html
 http://10.15.163.122:7447/nginx-console/status.html
 -----------------------------
-#Login to NSS 
-#login URL
-----------------------------
-https://localhost:443
-administrator/Signal1.
----------------------
+
 test machine for geo
 10.93.135.85
 root/Jenkins1
-
-1048576
-$export MIBS=ALL
-
-# - manager-1 sender snmp
-ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.66
-# -receiver 
-ssh -i clcmos-login-17.06-00.id_rsa 10.93.135.101
 
 
 #console service start 
@@ -272,16 +263,6 @@ kill <>
 
 1302 alarm: NTP Client/Server stopped
 systemctl stop ntpd
-
-
-snmp sender:10.93.135.66,67,68,74 
-snmp intermediate receiver: 10.93.135.66 
-snnp receiver:10.93.135.101
-
-Manager-1	0x1000100930135066 10.93.135.66
-Manager-2	0x2000100930135067
-Collector-1	0x3000100930135068
-Collector-2	0x4000100930135074
 
 
 Cardamom SiteA : 10.93.135.65 install server
@@ -316,14 +297,6 @@ Test Server for config verification
 siem_user/Jenkins1
 -------------------------------
 
-Dev VM 
-----------------
-10.159.252.119
-root/Peramuthan2810*
-
---- pwd for audior user
-Audito1!
-
 -----------------------------------------------
 unix helpers
 ---------------------------------------------
@@ -342,11 +315,6 @@ iptables -F && iptables -t nat -F && iptables -t mangle -F && iptables -X
 #file transfer
 scp -i clcmos-login-17.06-00.id_rsa upd11.30mib.tar.gz root@10.93.135.67:/root/
 scp -i clcmos-login-17.06-00.id_rsa root@10.93.135.66:/root/audit_backup.tar .
-scp -i clcm_pri_key root@10.75.86.35:/root/es-client-mgr1.log .
-scp -i clcm_pri_key root@10.75.86.36:/root/es-client-mgr2.log .
-scp -i clcm_pri_key root@10.75.86.37:/root/es-client-cl1.log .
-scp -i clcm_pri_key root@10.75.86.35:/root/es-data-mgr1.log .
-scp -i clcm_pri_key root@10.75.86.36:/root/es-data-mgr2.log .
 scp -i clcm_pri_key root@10.75.86.35:/root/citm-mr2.log .
 scp -i clcm_pri_key root@10.75.86.35:/var/log/kibana-timeout.log .
 #extract run file
@@ -357,6 +325,11 @@ sudo lsof -i -P -n | grep LISTEN
 sudo netstat -tulpn | grep LISTEN
 sudo nmap -sTU -O IP-address-Here
 docker ps | grep <port>
+
+#find server is reachable 
+nc -v 10.15.163.122 7777
+curl http://10.15.163.122:7777
+cat < /dev/tcp/127.0.0.1/22
 
 #rpm check
 #list the rpms installed
@@ -479,43 +452,6 @@ artifactory.devsec.eecloud.dynamic.nsn-net.net:8081/artifactory/sg_repo
 #replace:10\.75\.33\.59\/images\/sg_repo
 find . -type f \( -name "*.py" -o -name "*.sh" -o -name "*.yml" -o -name "*.yaml" -o -name "*.ini" -o -name "*.conf" -o -name "readme" -o -name "Dockerfile" -o -name "Makefile" -o -name "*.properties" \)| xargs perl -pi -e 's/artifactory\.devsec\.eecloud\.dynamic\.nsn-net\.net:8081\/artifactory\/sg_repo/10\.75\.33\.59\/images\/sg_repo/g;'
 
-
--------------------------------------------
-test install
-========
-https://cloud01.tre.nsn-rdnet.net/ui/index.php?project=DN-DDE&page=Labs&name=CLAB135
-18:46
-Manjunath Jogin
-dn-dde-admin/LabAcc0unt
-18:47
-Passw0rd!
-18:49Baitanik Talukder
-Manjunath Jogin
-[BCMT-18.06-4 root@clcmos:~/CSF-BCMT]$ ncm appv1 load --app_path [path_to_nokia_nss_tgz]
-
-
-
-
-Followings are the steps to start and stop the simulator
-
-Run the script or simulator in one terminal :
-python2.7 generator.py
-
-with docker : 
-docker run -i -p 5000:5000  -t 189f65b1b5e7 /bin/bash
-
-from another terminal send post request.
-replace collector IP by kubectl get svc -n analytics | grep "4739/TCP" 
-Start : 
-curl -X POST http://10.15.163.123:5000/testcase/0 -H "Content-Type: application/json" -d '{ "address":"<collector IP>", "protocol": "tcp" , "jobs" : 16 , "rate": 1000,  "rep": 0}'
-
-STOP : 
-curl -X POST http://10.15.163.123:5000/stop -H "Content-Type: application/json"
-
-NOTE : generator_cli.py script is there to run without rest server. In that we have pass the same set of argument in command line only .
-Simulator is present : IP : 10.15.163.123 (root/crvmtemplate)
-PATH : /root/new_repo/SS7/docker/ipfix_generator/scripts
-Docker file for dependency : /root/new_repo/SS7/docker/_base_images/ipfix_generator
 
 
 -------------------------
@@ -679,7 +615,10 @@ ncm cluster status
 cat /proc/sys/fs/inotify/max_user_watches # default is 8192 $ sudo sysctl fs.inotify.max_user_watches=1048576 # increase to 1048576
 
 
+#change VM size
+vboxmanage clonehd "C:\Users\rgouda\VirtualBox VMs\DDEVM_5G_Config\DDEVM-disk001.vmdk" "C:\Users\rgouda\OneDrive - Nokia\DDEVM_5G\DDEVM_5G.vdi" --format vdi
 
+vboxmanage modifyhd "C:\Users\rgouda\OneDrive - Nokia\DDEVM_5G\DDEVM_5G.vdi" --resize 100999
 
 ----add rules-----
 iptables -I INPUT 1 -p tcp --dport 9200 -j DROP && iptables -I FORWARD 1 -p tcp --dport 9200 -j DROP && iptables -I OUTPUT 1 -p tcp --dport 9200 -j DROP
